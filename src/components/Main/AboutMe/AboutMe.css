@@ -1,0 +1,67 @@
+.aboutMe {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 0 70px;
+  height: 100vh;
+  /* background: #f5f5f5; */
+}
+
+.aboutMeTitle {
+  width: 100%;
+  margin: 0;
+  padding-top: 90px;
+  padding-bottom: 23px;
+  border-bottom: 1px black solid;
+  margin-bottom: 70px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.aboutMeBlock {
+  display: flex;
+  justify-content: space-between;
+}
+
+.aboutMeData {
+  max-width: 600px;
+}
+
+.aboutMeDataName {
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.2;
+}
+
+.aboutMeDataAbout {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.aboutMeDataParagraph {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.aboutMeBlockImg {
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.aboutMeContacts {
+  margin: 100px 0;
+}
+
+.aboutMeContactsItems {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
+  margin-right: 20px;
+}

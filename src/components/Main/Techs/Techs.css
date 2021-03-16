@@ -1,0 +1,53 @@
+.techs {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 0 70px;
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+.techsTitle {
+  width: 100%;
+  margin: 0;
+  padding-top: 90px;
+  padding-bottom: 23px;
+  border-bottom: 1px black solid;
+  margin-bottom: 70px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.techsBlockTitle {
+  text-align: center;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 1.2;
+}
+
+.techsBlockParagraph {
+  max-width: 460px;
+  margin: auto;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.techsBlockItems {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.techsBlockItem {
+  background: #e8e8e8;
+  border-radius: 10px;
+  margin: 5px;
+  width: 90px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

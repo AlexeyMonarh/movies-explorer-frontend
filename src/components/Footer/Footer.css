@@ -1,0 +1,33 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 172px;
+  display: flex;
+  background: #fafafa;
+  padding: 0 70px;
+}
+
+.footerTitle {
+  margin: 0;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #a0a0a0;
+  text-align: center;
+}
+
+.footerBlock {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px #E8E8E8 solid;
+  height: 56px;
+}
+
+.footerBlockItems {
+  display: flex;
+  list-style: none;
+}

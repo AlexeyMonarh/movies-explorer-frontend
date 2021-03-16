@@ -1,0 +1,40 @@
+.portfolio {
+  display: flex;
+  padding: 0 70px;
+}
+
+.portfolioItems {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1;
+  color: #A0A0A0;
+  list-style: none;
+}
+
+.portfolioItem{
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.7;
+  border-bottom: 2px #E8E8E8 solid;
+  color: black;
+  margin: 20px 0;
+  padding-bottom: 20px;
+}
+
+.portfolioItemLink {
+  text-decoration: none;
+  color: black;
+}
+
+.portfolioItem:last-child {
+  border-bottom: 0;
+}
+
+.portfolioItem:first-child {
+  margin-top: 50px;
+}

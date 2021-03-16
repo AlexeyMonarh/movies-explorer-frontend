@@ -1,0 +1,82 @@
+.aboutProject {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 0 70px;
+  height: 100vh;
+}
+
+.aboutProjectTitle {
+  width: 100%;
+  margin: 0;
+  padding-top: 110px;
+  padding-bottom: 23px;
+  border-bottom: 1px black solid;
+  margin-bottom: 70px;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.aboutProjectBlock {
+  display: flex;
+  margin-bottom: 110px;
+}
+
+.aboutProjectBlockStagesTitle {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.aboutProjectBlockStagesParagraph {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.aboutProjectTimeLine {
+  display: flex;
+  width: 100%;
+  height: 36px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.aboutProjectTimeLineOneWeek {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22%;
+  background: #2be080;
+}
+
+.aboutProjectTimeLineFourWeek {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 78%;
+  background: #f2f2f2;
+}
+
+.aboutProjectTimeLineParagraph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #a0a0a0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.aboutProjectTimeLineParagraphBack {
+  width: 22%;
+  text-align: center;
+}
+
+.aboutProjectTimeLineParagraphFront {
+  width: 78%;
+  text-align: center;
+}

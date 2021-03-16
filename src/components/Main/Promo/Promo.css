@@ -1,0 +1,101 @@
+.promo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  position: relative;
+  background-color: #465dff;
+}
+
+.promoHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 70px;
+}
+
+.promoHeaderLogo {
+  width: 38px;
+  height: 38px;
+}
+
+.promoHeaderNav {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.promoHeaderLinkReg {
+  text-decoration: none;
+  margin-right: 30px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.promoHeaderButton {
+  padding: 8px 20px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.3;
+  background: #2be080;
+  border: none;
+  border-radius: 3px;
+}
+
+.promoLogo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.promoTitle {
+  max-width: 730px;
+  margin: auto;
+  padding: 0;
+  font-family: Inter;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  text-align: center;
+  color: #fff;
+}
+
+.promoFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 66px;
+  background: #f5f5f5;
+}
+
+.promoFooterNav {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.promoFooterNavLi {
+  margin-right: 30px;
+}
+
+.promoFooterNavLi:last-child {
+  margin-right: 0;
+}
+
+.promoFooterNavLink {
+  color: black;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.2;
+}
