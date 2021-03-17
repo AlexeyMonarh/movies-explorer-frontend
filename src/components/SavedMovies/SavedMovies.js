@@ -1,5 +1,7 @@
 import React from "react";
 
-function savedMovies(params) {}
+function SavedMovies(params) {
+  return <div className="saved-movies">Hello saved</div>;
+}
 
-export default savedMovies;
+export default SavedMovies;

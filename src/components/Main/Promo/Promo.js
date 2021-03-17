@@ -1,23 +1,9 @@
 import React from "react";
-import logo from "../../../images/svg/logo.svg";
 import landingLogo from "../../../images/svg/landing-logo.svg";
 
 function Promo(params) {
   return (
     <div className='promo'>
-      <div className='promoHeader'>
-        <img src={logo} alt='Логотип' className='promoHeaderLogo' />
-        <ul className='promoHeaderNav'>
-          <li>
-            <a href='#' className='promoHeaderLinkReg'>
-              Регистрация
-            </a>
-          </li>
-          <li>
-            <button className='promoHeaderButton'>Войти</button>
-          </li>
-        </ul>
-      </div>
       <img
         src={landingLogo}
         alt='Логотип Яндекс.Практикума'
