@@ -15,17 +15,17 @@ function Promo(params) {
       <div className='promoFooter'>
         <ul className='promoFooterNav'>
           <li className='promoFooterNavLi'>
-            <a href='#' className='promoFooterNavLink'>
+            <a href='#aboutProject' className='promoFooterNavLink'>
               О проекте
             </a>
           </li>
           <li className='promoFooterNavLi'>
-            <a href='#' className='promoFooterNavLink'>
+            <a href='#techs' className='promoFooterNavLink'>
               Технологии
             </a>
           </li>
           <li className='promoFooterNavLi'>
-            <a href='#' className='promoFooterNavLink'>
+            <a href='#about-me' className='promoFooterNavLink'>
               Студент
             </a>
           </li>

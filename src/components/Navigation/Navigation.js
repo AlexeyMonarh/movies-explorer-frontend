@@ -8,39 +8,40 @@ function Navigation(props) {
       <Route exact path="/">
         <ul className="nav">
           <li className="nav__li">
-            <a href="#" className="nav__link">
+            <Link to="/signup" className="nav__link">
               Регистрация
-            </a>
+            </Link>
           </li>
           <li>
-            <button className="nav__button">Войти</button>
+            <Link to="/signin" className="nav__link">
+              <button className="nav__button">Войти</button>
+            </Link>
           </li>
         </ul>
       </Route>
-      <Route exact path="/movies">
+      <Route>
         <ul className="nav">
           <li className="nav__li">
-            <a href="#" className="nav__link nav__link_color">
+            <Link to="/movies" className="nav__link nav__link_color">
               Фильмы
-            </a>
+            </Link>
           </li>
           <li className="nav__li">
-            <a href="/saved-movies" className="nav__link nav__link_color">
+            <Link to="/saved-movies" className="nav__link nav__link_color">
               Сохранённые фильмы
-            </a>
+            </Link>
           </li>
         </ul>
-
-        <button className="nav__button nav__button_movies">
-          <Link to="/profile" className="nav__button-link">
+        <Link to="/profile" className="nav__button-link">
+          <button className="nav__button nav__button_movies">
             <img
               src={imgAccount}
               alt="Иконка аккаунта"
               className="nav__button-img"
             />
             Аккаунт
-          </Link>
-        </button>
+          </button>
+        </Link>
       </Route>
     </Switch>
   );

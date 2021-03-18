@@ -1,0 +1,82 @@
+.login {
+  background: #fff;
+}
+
+.register {
+  margin: auto;
+  margin-top: 60px;
+  max-width: 398px;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* .register__form {
+  text-align: center;
+} */
+
+.register__input {
+  color: #000;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+}
+
+.register__button {
+  margin-top: 274px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+}
+
+.register__span {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.popup__inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup__heading {
+  margin: 0;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.21;
+  margin-bottom: 40px;
+}
+
+.popup__input {
+  padding: 0;
+  outline: none;
+  min-height: 30px;
+  border: none;
+  border-bottom: 1px solid #00000033;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.21;
+  margin-bottom: 20px;
+}
+
+.popup__input-invalid {
+  border-bottom: 1px solid #FF6838;
+}
+
+.popup__submit-button {
+  color: #fff;
+  height: 51px;
+  border-radius: 2px;
+  background: #ff6838;
+  padding: 0;
+  margin: 0;
+  transition: opacity 0.3s ease-in-out;
+  margin-top: 37px;
+}
+
+.popup__submit-button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

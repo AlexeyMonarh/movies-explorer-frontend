@@ -11,11 +11,17 @@
 }
 
 .search-form__search-input {
+  padding: 20px 16px;
+  color: #a0a0a0;
   width: 100%;
   height: 50px;
   border: none;
   border-radius: 8px;
   background: #f9f9f9;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.3;
 }
 
 .search-form__search-button {
@@ -59,7 +65,7 @@
   width: 50px;
   height: 26px;
   border-radius: 13px;
-  background: #cdd1da;
+  background: #f9f9f9;
   box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.2);
   transition: 0.2s;
 }
