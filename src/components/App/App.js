@@ -6,6 +6,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
+import ErrorPage from "../404/ErrorPage";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <Register />
+        </Route>
+        <Route path="/errors">
+          <ErrorPage />
         </Route>
       </Switch>
     </div>

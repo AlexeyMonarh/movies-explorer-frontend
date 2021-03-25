@@ -2,81 +2,85 @@
   background: #fff;
 }
 
-.register {
+.identification {
   margin: auto;
   margin-top: 60px;
   max-width: 398px;
-  height: 50vh;
+  height: 84vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
-/* .register__form {
-  text-align: center;
-} */
+.identification__form {
+  display: flex;
+  flex-direction: column;
+}
 
-.register__input {
-  color: #000;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #fff;
+.identification__input {
   outline: none;
-}
-
-.register__button {
-  margin-top: 274px;
-  background-color: #ffffff;
-  color: black;
-  border: none;
-}
-
-.register__span {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.popup__inputs {
-  display: flex;
-  flex-direction: column;
-}
-
-.popup__heading {
-  margin: 0;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 1.21;
-  margin-bottom: 40px;
-}
-
-.popup__input {
   padding: 0;
-  outline: none;
   min-height: 30px;
   border: none;
   border-bottom: 1px solid #00000033;
   font-weight: normal;
-  font-size: 14px;
-  line-height: 1.21;
-  margin-bottom: 20px;
+  font-size: 10px;
+  line-height: 1.2;
+  margin-bottom: 40px;
 }
 
-.popup__input-invalid {
-  border-bottom: 1px solid #FF6838;
-}
-
-.popup__submit-button {
+.identification__button {
+  border: none;
   color: #fff;
-  height: 51px;
-  border-radius: 2px;
+  height: 45px;
+  border-radius: 3px;
   background: #ff6838;
   padding: 0;
   margin: 0;
   transition: opacity 0.3s ease-in-out;
-  margin-top: 37px;
+  margin-top: 112px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.2;
 }
 
-.popup__submit-button:hover {
-  opacity: 0.6;
+.identification__span {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.identification__form-heading {
+  margin: 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 1.2;
+  margin-bottom: 40px;
+}
+
+/* .popup__input-invalid {
+  border-bottom: 1px solid #ff6838;
+} */
+
+.identification__span {
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.identification__link {
+  text-decoration: none;
+  margin-left: 6px;
+  color: #ff6838;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.identification__button:hover {
+  opacity: 0.8;
   cursor: pointer;
+}
+
+.identification__link:hover {
+  opacity: 0.8;
 }

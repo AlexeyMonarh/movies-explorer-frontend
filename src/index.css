@@ -10,6 +10,7 @@
 @import url("../src/components/Header/Header.css");
 @import url("../src/components/Navigation/Navigation.css");
 @import url("../src/components/Footer/Footer.css");
+@import url("../src/components/404/ErrorPage.css");
 
 .page {
   font-family: "Inter", sans-serif;

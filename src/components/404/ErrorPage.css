@@ -1,0 +1,23 @@
+.errorPage {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.errorPage__img {
+  width: 400px;
+  height: 169px;
+  margin-top: 246px;
+}
+
+.errorPage__paragraph {
+  margin-top: 40px;
+  margin-bottom: 208px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 1.19;
+}
+
+.errorPage__link {
+  text-decoration: none;
+  color: #ff6838;
+}

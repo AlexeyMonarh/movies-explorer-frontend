@@ -4,16 +4,16 @@ import logo from "../../images/svg/logo.svg";
 
 function Register(params) {
   return (
-    <div className="register">
+    <div className="identification">
       <Link to="/">
-        <img src={logo} alt="Логотип" className="header__logo" />
+        <img src={logo} alt="Логотип" />
       </Link>
-      <form action="#" className="popup__inputs register__form ">
-        <h2 className="popup__heading">Добро пожаловать!</h2>
+      <form action="#" className="identification__form">
+        <h2 className="identification__form-heading">Добро пожаловать!</h2>
         <input
           type="text"
           name="name"
-          className="popup__input register__input"
+          className="identification__input"
           placeholder="Имя"
           required
           autoComplete="off"
@@ -21,7 +21,7 @@ function Register(params) {
         <input
           type="email"
           name="email"
-          className="popup__input register__input"
+          className="identification__input"
           placeholder="Email"
           required
           autoComplete="off"
@@ -30,17 +30,20 @@ function Register(params) {
         <input
           type="password"
           name="password"
-          className="popup__input register__input"
+          className="identification__input"
           placeholder="Пароль"
           required
         />
         {/* <span className="popup__error" id="link-error"></span> */}
-        <button type="submit" className="popup__submit-button register__button">
+        <button
+          type="submit"
+          className="identification__button"
+        >
           Зарегистрироваться
         </button>
-        <span className="register__span">
+        <span className="identification__span">
           Уже зарегистрированы?
-          <Link className="header__auth" to="/signin">
+          <Link className="identification__link" to="/signin">
             Войти
           </Link>
         </span>
