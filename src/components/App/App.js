@@ -6,6 +6,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
+// import FormValidator from "../../utils/FormValidator/FormValidator";
 import ErrorPage from "../404/ErrorPage";
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <ErrorPage />
         </Route>
       </Switch>
+      {/* <FormValidator /> */}
     </div>
   );
 }

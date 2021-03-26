@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 
 function Profile(params) {
@@ -8,25 +9,33 @@ function Profile(params) {
       <div className="profile-block">
         <h2 className="profile-block__title">Привет, Виталий!</h2>
         <form className="profile-block__form">
-          <div className="profile-block__form-inputs">
-            <input
-              type="text"
-              placeholder="Имя"
-              className="profile-block__form-input"
-            />
-            <input
-              type="text"
-              className="profile-block__form-input"
-              placeholder="Почта"
-            />
+          <div className="profile-block__form-items">
+            <div className="profile-block__form-item">
+              <input
+                type="text"
+                className="profile-block__form-input"
+                dir="rtl"
+                value="Виталий"
+              />
+              <label class="profile-block__form-item-input-label">Имя</label>
+            </div>
+            <div className="profile-block__form-item">
+              <input
+                type="text"
+                className="profile-block__form-input"
+                dir="rtl"
+                value="pochta@yandex.ru"
+              />
+              <label class="profile-block__form-item-input-label">Почта</label>
+            </div>
           </div>
           <div className="profile-block__form-buttons">
             <button className="profile-block__form-button">
               Редактировать
             </button>
-            <button className="profile-block__form-button">
+            <Link className="profile-block__form-link" to="/">
               Выйти из аккаунта
-            </button>
+            </Link>
           </div>
         </form>
       </div>

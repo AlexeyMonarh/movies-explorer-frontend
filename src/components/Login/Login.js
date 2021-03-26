@@ -1,46 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import logo from "../../images/svg/logo.svg";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../../images/svg/logo.svg';
 
 function Login(params) {
   return (
-      <div className="identification">
-        <Link to="/">
-          <img src={logo} alt="Логотип" />
-        </Link>
-        <form action="#" className="identification__form">
-          <h2 className="identification__form-heading">Рады видеть!</h2>
-          <input
-            type="email"
-            name="email"
-            className="identification__input"
-            placeholder="Email"
-            required
-            autoComplete="off"
-          />
-          {/* <span className="popup__error" id="name-error"></span> */}
-          <input
-            type="password"
-            name="password"
-            className="identification__input"
-            placeholder="Пароль"
-            required
-          />
-          {/* <span className="popup__error" id="link-error"></span> */}
-          <button
-            type="submit"
-            className="identification__button"
-          >
+    <div className='identification'>
+      <Link to='/'>
+        <img src={logo} alt='Логотип' />
+      </Link>
+      <form action='#' className='identification__form'>
+        <div className='identification__form-items'>
+          <h2 className='identification__form-item-heading'>Рады видеть!</h2>
+          <div className='identification__form-item'>
+            <input
+              type='email'
+              name='email'
+              className='identification__form-item-input'
+              required
+              autoComplete='off'
+            />
+            <label className='identification__form-item-input-label'>Email</label>
+          </div>
+          <div className='identification__form-item'>
+            <input
+              type='password'
+              name='password'
+              className='identification__form-item-input'
+              required
+            />
+            <label className='identification__form-item-input-label'>Пароль</label>
+          </div>
+        </div>
+        <div className='identification__buttons'>
+          <button type='submit' className='identification__button'>
             Войти
           </button>
-          <span className="identification__span">
+          <span className='identification__span'>
             Ещё не зарегистрированы?
-            <Link className="identification__link" to="/signup">
+            <Link className='identification__link' to='/signup'>
               Регистрация
             </Link>
           </span>
-        </form>
-      </div>
+        </div>
+      </form>
+    </div>
   );
 }
 
