@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
-import validationSchema from '../../utils/FormValidator/FormValidator'
+import validationSchema from '../../utils/FormValidator/FormValidatorRegister';
 import logo from '../../images/svg/logo.svg';
 
-function Register(params) {
+function Register() {
   return (
     <div className='identification'>
       <Link to='/'>

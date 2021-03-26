@@ -42,10 +42,6 @@
   line-height: 1.2;
 }
 
-/* .identification__form-item-input:invalid {
-  border-bottom-color: red;
-} */
-
 .identification__form-item-input:focus {
   border-bottom: 1px solid #ff6838;
 }

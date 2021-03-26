@@ -1,18 +1,8 @@
 .error {
-  /* display: none; */
   margin: 0;
   margin-top: 6px;
   font-weight: normal;
   font-size: 12px;
   line-height: 1.25;
   color: #FF0000;
-  /* margin-top: -15px; */
 }
-/* 
-.popup__error_active {
-  display: inline;
-}
-
-.popup__input-invalid {
-  border-bottom: 1px solid red;
-} */
