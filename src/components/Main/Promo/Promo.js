@@ -15,7 +15,7 @@ function Promo() {
       <div className='promo__footer'>
         <ul className='promo__footer-nav'>
           <li className='promo__footer-nav-li'>
-            <a href='#aboutProject' className='promo__footer-nav-link'>
+            <a href='#about-project' className='promo__footer-nav-link'>
               О проекте
             </a>
           </li>
