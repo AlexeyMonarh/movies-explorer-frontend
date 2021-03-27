@@ -15,3 +15,9 @@
   height: 38px;
   margin-right: 4em;
 }
+
+@media screen and (max-width: 768px) {
+  .header__main {
+    padding: 18px 30px;
+  }
+}

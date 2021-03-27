@@ -7,7 +7,7 @@
   background-color: #465dff;
 }
 
-.promoLogo {
+.promo__logo {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,7 +16,7 @@
   margin: auto;
 }
 
-.promoTitle {
+.promo__title {
   max-width: 730px;
   margin: auto;
   padding: 0;
@@ -30,7 +30,7 @@
   color: #fff;
 }
 
-.promoFooter {
+.promo__footer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,7 +39,7 @@
   background: #f5f5f5;
 }
 
-.promoFooterNav {
+.promo__footer-nav {
   margin: 0;
   padding: 0;
   display: flex;
@@ -47,15 +47,15 @@
   list-style: none;
 }
 
-.promoFooterNavLi {
+.promo__footer-nav-li {
   margin-right: 30px;
 }
 
-.promoFooterNavLi:last-child {
+.promo__footer-nav-li:last-child {
   margin-right: 0;
 }
 
-.promoFooterNavLink {
+.promo__footer-nav-link {
   color: black;
   font-weight: 500;
   font-size: 13px;

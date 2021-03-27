@@ -12,8 +12,8 @@ function Profile() {
         <h2 className='profile-block__title'>Привет, Виталий!</h2>
         <Formik
           initialValues={{
-            name: '',
-            email: '',
+            name: 'Виталий',
+            email: 'pochta@yandex.ru',
           }}
           validateOnBlur
           onSubmit={(values) => {
@@ -32,6 +32,9 @@ function Profile() {
           }) => (
             <form className='profile-block__form'>
               <div className='profile-block__form-items'>
+                {touched.name && errors.name && (
+                  <p className='error error_top'>{errors.name}</p>
+                )}
                 <div className='profile-block__form-item'>
                   <input
                     type='text'
@@ -48,9 +51,6 @@ function Profile() {
                     htmlFor={`name`}>
                     Имя
                   </label>
-                  {touched.name && errors.name && (
-                    <p className='error'>{errors.name}</p>
-                  )}
                 </div>
                 <div className='profile-block__form-item'>
                   <input
@@ -69,10 +69,10 @@ function Profile() {
                     htmlFor={`email`}>
                     Почта
                   </label>
-                  {touched.email && errors.email && (
+                </div>
+                {touched.email && errors.email && (
                     <p className='error'>{errors.email}</p>
                   )}
-                </div>
               </div>
               <div className='profile-block__form-buttons'>
                 <button

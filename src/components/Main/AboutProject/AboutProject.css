@@ -80,3 +80,9 @@
   width: 78%;
   text-align: center;
 }
+
+@media screen and (max-width: 768px) {
+  .aboutProject {
+    padding: 0 50px;
+  }
+}

@@ -1,4 +1,5 @@
 .movies-card-list {
+  margin: 0;
   padding: 70px;
   list-style: none;
   display: grid;
