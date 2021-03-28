@@ -1,4 +1,4 @@
-.movies-card-list {
+.movies-card-list__ul {
   margin: 0;
   margin: 0 70px;
   padding: 70px 0;
@@ -10,8 +10,28 @@
   border-top: 1px #e8e8e8 solid;
 }
 
+.movies-card-list__addItems {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movies-card-list__addItems-button {
+  width: 320px;
+  height: 36px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px #e8e8e8 solid;
+  border-radius: 5px;
+}
+
 @media screen and (max-width: 1279px) {
-  .movies-card-list {
+  .movies-card-list__ul {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
     margin: 0 30px;
@@ -19,7 +39,7 @@
 }
 
 @media screen and (max-width: 929px) {
-  .movies-card-list {
+  .movies-card-list__ul {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 30px;
     margin: 0 30px;
@@ -27,7 +47,7 @@
 }
 
 @media screen and (max-width: 632px) {
-  .movies-card-list {
+  .movies-card-list__ul {
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 30px;
     margin: 0 30px;

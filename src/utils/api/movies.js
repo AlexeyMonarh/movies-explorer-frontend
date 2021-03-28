@@ -17,69 +17,103 @@ import zona from '../../images/imagecompressor/zona-min.png';
 
 const items = [
   {
+    id: 1,
     img: slova,
     description: '33 слова о дизайне',
   },
   {
+    id: 2,
     img: stoLet,
     description: 'Киноальманах «100 лет дизайна»',
   },
   {
+    id: 3,
     img: vPogone,
     description: 'В погоне за Бенкси',
   },
   {
+    id: 4,
     img: baskiay,
     description: 'Баския: Взрыв реальности',
   },
   {
+    id: 5,
     img: beg,
     description: 'Бег это свобода',
   },
   {
+    id: 6,
     img: knigo,
     description: 'Книготорговцы',
   },
   {
+    id: 7,
     img: dymauOGermany,
     description: 'Когда я думаю о Германии ночью',
   },
   {
+    id: 8,
     img: gimDanger,
     description: 'Gimme Danger: История Игги и The Stooges',
   },
   {
+    id: 9,
     img: djenis,
     description: 'Дженис: Маленькая девочка грустит',
   },
   {
+    id: 10,
     img: soberis,
     description: 'Соберись перед прыжком',
   },
   {
+    id: 11,
     img: piJHarvi,
     description: 'Пи Джей Харви: A dog called money',
   },
   {
+    id: 12,
     img: poVolnam,
     description: 'По волнам: Искусство звука в кино',
   },
   {
+    id: 13,
     img: roodboy,
     description: 'Рудбой',
   },
   {
+    id: 14,
     img: skate,
     description: 'Скейт — кухня',
   },
   {
+    id: 15,
     img: voina,
     description: 'Война искусств',
   },
   {
+    id: 16,
     img: zona,
     description: 'Зона',
   },
 ];
 
-export default items;
+const itemsSave = [
+  {
+    id: 1,
+    img: slova,
+    description: '33 слова о дизайне',
+  },
+  {
+    id: 2,
+    img: stoLet,
+    description: 'Киноальманах «100 лет дизайна»',
+  },
+  {
+    id: 3,
+    img: vPogone,
+    description: 'В погоне за Бенкси',
+  },
+];
+
+export { items, itemsSave };
