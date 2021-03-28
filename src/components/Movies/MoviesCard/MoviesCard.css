@@ -1,7 +1,7 @@
 .movies-card {
   margin-bottom: 15px;
   min-width: 270px;
-  max-height: 280px;
+  height: auto;
 }
 
 .movies-card__img {
@@ -59,4 +59,11 @@
   font-size: 11px;
   line-height: 1.2;
   color: #a0a0a0;
+}
+
+@media screen and (max-width: 330px) {
+  .movies-card {
+    min-width: 0;
+    max-width: 270px;
+  }
 }

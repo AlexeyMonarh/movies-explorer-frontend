@@ -16,7 +16,7 @@
   margin-right: 4em;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1279px) {
   .header__main {
     padding: 18px 30px;
   }
