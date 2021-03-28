@@ -1,18 +1,24 @@
-import React from "react";
+import React from 'react';
 
-function Portfolio(params) {
+function Portfolio() {
   return (
     <div className='portfolio'>
-      <ul className='portfolioItems'>
+      <ul className='portfolio__items'>
         Портфолио
-        <li className='portfolioItem'>
-          <a href='#' className='portfolioItemLink'>Статичный сайт</a>↗
+        <li className='portfolio__item'>
+          <a href='https://alexeymonarh.github.io/how-to-learn/' className='portfolio__item-link'>
+            <p className='portfolio__item-paragraph'>Статичный сайт</p> ↗
+          </a>
         </li>
-        <li className='portfolioItem'>
-          <a href='#' className='portfolioItemLink'>Адаптивный сайт</a>↗
+        <li className='portfolio__item'>
+          <a href='https://alexeymonarh.github.io/russian-travel/' className='portfolio__item-link'>
+            <p className='portfolio__item-paragraph'>Адаптивный сайт</p> ↗
+          </a>
         </li>
-        <li className='portfolioItem'>
-          <a href='#' className='portfolioItemLink'>Одностраничное приложение</a>↗
+        <li className='portfolio__item'>
+          <a href='https://monarhmesto.students.nomoreparties.space/' className='portfolio__item-link'>
+            <p className='portfolio__item-paragraph'>Одностраничное приложение</p> ↗
+          </a>
         </li>
       </ul>
     </div>

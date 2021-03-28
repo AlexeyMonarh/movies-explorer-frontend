@@ -1,7 +1,7 @@
 .search-form {
   display: flex;
   flex-direction: column;
-  margin: 80px 70px 0 70px;
+  padding: 80px 70px 0 70px;
   border-bottom: 1px #e8e8e8 solid;
 }
 
@@ -58,7 +58,7 @@
   line-height: 1.5;
 }
 .search-form__checkbox-text:before {
-  content: "";
+  content: '';
   position: absolute;
   top: -4px;
   left: 0;
@@ -70,7 +70,7 @@
   transition: 0.2s;
 }
 .search-form__checkbox-text:after {
-  content: "";
+  content: '';
   position: absolute;
   top: -2px;
   left: 2px;
@@ -90,4 +90,10 @@
   .search-form__checkbox-input:checked
   + .search-form__checkbox-text:after {
   left: 26px;
+}
+
+@media screen and (max-width: 768px) {
+  .search-form{
+    padding: 80px 30px 0 30px;
+  }
 }

@@ -1,32 +1,32 @@
-import React from "react";
+import React from 'react';
 
-function Footer(params) {
+function Footer() {
   return (
     <div className='footer'>
-      <h2 className='footerTitle'>
+      <h2 className='footer__title'>
         Учебный проект Яндекс.Практикум х BeatFilm.
       </h2>
-      <div className='footerBlock'>
+      <div className='footer__block'>
         <p>&copy;2020</p>
-        <ul className='footerBlockItems'>
-          <li className='footerBlockItem'>
+        <ul className='footer__block-items'>
+          <li className='footer__block-item'>
             <a
               href='https://praktikum.yandex.ru/'
-              className='aboutMeContactsItems'>
+              className='about-me__contacts-item'>
               Яндекс.Практикум
             </a>
           </li>
-          <li className='footerBlockItem'>
+          <li className='footer__block-item'>
             <a
               href='https://www.instagram.com/monarh_web/'
-              className='aboutMeContactsItems'>
+              className='about-me__contacts-item'>
               Instagram
             </a>
           </li>
-          <li className='footerBlockItem'>
+          <li className='footer__block-item'>
             <a
               href='https://github.com/AlexeyMonarh'
-              className='aboutMeContactsItems'>
+              className='about-me__contacts-item'>
               GitHub
             </a>
           </li>

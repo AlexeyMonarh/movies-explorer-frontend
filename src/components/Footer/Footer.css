@@ -9,7 +9,7 @@
   padding: 0 70px;
 }
 
-.footerTitle {
+.footer__title {
   margin: 0;
   font-weight: 400;
   font-size: 13px;
@@ -18,16 +18,25 @@
   text-align: center;
 }
 
-.footerBlock {
+.footer__block {
   width: 100%;
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
-  border-top: 1px #E8E8E8 solid;
+  border-top: 1px #e8e8e8 solid;
   height: 56px;
 }
 
-.footerBlockItems {
+.footer__block-items {
   display: flex;
   list-style: none;
 }
+
+@media screen and (max-width: 768px) {
+  .footer {
+    margin-top: 50px;
+    background: #fff;
+    padding: 0 30px;
+  }
+}
+

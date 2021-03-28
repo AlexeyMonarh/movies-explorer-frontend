@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: start;
   padding: 110px 70px;
-  height: 100vh;
+  height: 100%;
 }
 
 .about-project__title {
@@ -84,7 +84,6 @@
 @media screen and (max-width: 768px) {
   .about-project {
     padding: 90px 50px;
-    height: 68vh;
   }
   .about-project__block-stages-paragraph {
     font-size: 12px;
