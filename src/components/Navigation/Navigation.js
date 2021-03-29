@@ -7,15 +7,17 @@ import { IconContext } from 'react-icons';
 
 function Navigation() {
   const [sidebar, setSidebar] = useState(false);
+  const [overlay, setOverlay] = useState(false);
 
   function showSidebar() {
     setSidebar(!sidebar);
+    setOverlay(!overlay);
   }
   return (
     <Switch>
       <Route exact path='/'>
-        <ul className='nav'>
-          <li className='nav__li'>
+        <ul className='nav nav_main'>
+          <li className='nav__li nav__li_main'>
             <Link to='/signup' className='nav__link'>
               Регистрация
             </Link>
@@ -30,36 +32,40 @@ function Navigation() {
       <Route>
         <IconContext.Provider value={{ color: '#000' }}>
           <Link to='#' className={`nav__bar`}>
-            <FaIcons.FaBars onClick={showSidebar} />
+            <FaIcons.FaBars className='nav__bar-icon' onClick={showSidebar} />
           </Link>
+          <div className={overlay ? 'overlay active' : 'overlay'}></div>
           <nav className={sidebar ? 'nav__menu active' : 'nav__menu'}>
-            <ul className='nav nav_menu' onClick={showSidebar}>
-              <li className='nav__li'>
-                <Link to='#' className='nav__bar'>
-                  <AiIcons.AiOutlineClose />
+            <Link to='#' className='nav__bar' onClick={showSidebar}>
+              <AiIcons.AiOutlineClose className='nav__bar-icon nav__bar-icon_close' />
+            </Link>
+            <ul className='nav nav_menu'>
+              <li className='nav__li nav__li_bar'>
+                <Link to='/' className='nav__link nav__link_color'>
+                  Главная
                 </Link>
               </li>
-              <li className='nav__li'>
+              <li className='nav__li nav__li_bar-margin'>
                 <Link to='/movies' className='nav__link nav__link_color'>
                   Фильмы
                 </Link>
               </li>
-              <li className='nav__li'>
+              <li className='nav__li nav__li_bar-margin'>
                 <Link to='/saved-movies' className='nav__link nav__link_color'>
                   Сохранённые фильмы
                 </Link>
               </li>
-              <Link to='/profile' className='nav__button-link'>
-                <button className='nav__button nav__button_movies'>
-                  <img
-                    src={imgAccount}
-                    alt='Иконка аккаунта'
-                    className='nav__button-img'
-                  />
-                  Аккаунт
-                </button>
-              </Link>
             </ul>
+            <Link to='/profile' className='nav__button-link'>
+              <button className='nav__button nav__button_movies'>
+                <img
+                  src={imgAccount}
+                  alt='Иконка аккаунта'
+                  className='nav__button-img'
+                />
+                Аккаунт
+              </button>
+            </Link>
           </nav>
         </IconContext.Provider>
       </Route>

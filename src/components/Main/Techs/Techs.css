@@ -31,6 +31,7 @@
   font-weight: 400;
   font-size: 50px;
   line-height: 1.2;
+  letter-spacing: -0.04em;
 }
 
 .techs__block-paragraph {
@@ -76,5 +77,34 @@
     font-weight: normal;
     font-size: 12px;
     line-height: 1.25;
+  }
+}
+
+@media screen and (max-width: 548px) {
+  .techs {
+    background: #fff;
+    padding: 70px 18px;
+  }
+  .techs__title {
+    padding-bottom: 28px;
+    margin-bottom: 70px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+  .techs__items {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-gap: 10px;
+    width: min-content;
+    align-self: center;
+    margin-top: 50px;
+  }
+  .techs__item {
+    margin: 0;
+  }
+  .techs__block-title {
+    font-size: 30px;
+    line-height: 1.2;
+    margin-bottom: 24px;
   }
 }

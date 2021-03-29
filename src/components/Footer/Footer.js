@@ -7,27 +7,27 @@ function Footer() {
         Учебный проект Яндекс.Практикум х BeatFilm.
       </h2>
       <div className='footer__block'>
-        <p>&copy;2020</p>
+        <p className='footer__block-date'>&copy;2020</p>
         <ul className='footer__block-items'>
           <li className='footer__block-item'>
             <a
               href='https://praktikum.yandex.ru/'
-              className='about-me__contacts-item'>
+              className='about-me__contacts-item footer__block-item_link'>
               Яндекс.Практикум
             </a>
           </li>
           <li className='footer__block-item'>
             <a
-              href='https://www.instagram.com/monarh_web/'
-              className='about-me__contacts-item'>
-              Instagram
+              href='https://github.com/AlexeyMonarh'
+              className='about-me__contacts-item footer__block-item_link'>
+              GitHub
             </a>
           </li>
           <li className='footer__block-item'>
             <a
-              href='https://github.com/AlexeyMonarh'
-              className='about-me__contacts-item'>
-              GitHub
+              href='https://www.instagram.com/monarh_web/'
+              className='about-me__contacts-item footer__block-item_link'>
+              Instagram
             </a>
           </li>
         </ul>

@@ -4,7 +4,7 @@ function MoviesCard(props) {
   function cardDelete() {
     props.buttonClick(props.id);
   }
-  
+
   return (
     <li className='movies-card'>
       <img

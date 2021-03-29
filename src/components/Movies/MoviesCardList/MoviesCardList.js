@@ -15,7 +15,7 @@ function MoviesCardList() {
   const listItems = addItems ? items.length : 16;
   const listItemsMin = addItems ? items.length : 8;
 
-  const itemsList = screen >= 768 ? listItems : listItemsMin;
+  const itemsList = screen >= 769 ? listItems : listItemsMin;
 
   useEffect(() => {
     function getWindowDimensions() {
@@ -28,6 +28,12 @@ function MoviesCardList() {
     }
     window.addEventListener('resize', getWindowDimensions);
   }, []);
+
+  useEffect(() => {
+    if (location.pathname === '/saved-movies') {
+      setBlockButton('movies-card-list__addItems_none');
+    }
+  });
 
   function handleClick() {
     setAddItems(true);
@@ -65,11 +71,6 @@ function MoviesCardList() {
           </Route>
           <Route exact path='/saved-movies'>
             {saveItems.map((data, _id) => {
-              useEffect(() => {
-                if (location.pathname === '/saved-movies') {
-                  setBlockButton('movies-card-list__addItems_none');
-                }
-              });
               return (
                 <MoviesCard
                   key={_id}

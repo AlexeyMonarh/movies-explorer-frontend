@@ -11,7 +11,6 @@
   margin: 0;
   padding-bottom: 23px;
   border-bottom: 1px black solid;
-  margin-bottom: 70px;
   font-weight: 400;
   font-size: 22px;
   line-height: 1.2;
@@ -23,6 +22,8 @@
 }
 
 .about-project__block-stages-title {
+  margin: 0;
+  margin-top: 70px;
   font-weight: 400;
   font-size: 20px;
   line-height: 1.2;
@@ -30,6 +31,8 @@
 }
 
 .about-project__block-stages-paragraph {
+  margin: 0;
+  margin-top: 26px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.4;
@@ -81,12 +84,41 @@
   text-align: center;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 548px) {
   .about-project {
-    padding: 90px 50px;
+    padding: 70px 18px;
+  }
+  .about-project__title{
+    padding-bottom: 28px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+  .about-project__block {
+    flex-direction: column;
+    margin-bottom: 110px;
+  }
+  .about-project__block-stages-title {
+    margin-top: 60px;
+    font-size: 18px;
+    line-height: 1.22;
   }
   .about-project__block-stages-paragraph {
-    font-size: 12px;
-    line-height: 1.5;
+    margin-top: 16px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .about-project__time-line {
+    font-size: 11px;
+    line-height: 1.18;
+  }
+  .about-project__time-line-one-week {
+    width: 42%;
+  }
+  .about-project__time-line-paragraph {
+    font-size: 11px;
+    line-height: 1.18;
+  }
+  .about-project__time-line-paragraph-back {
+    width: 42%;
   }
 }

@@ -61,3 +61,21 @@
   font-size: 13px;
   line-height: 1.2;
 }
+
+@media screen and (max-width: 368px) {
+  .promo__logo {
+    width: 248px;
+    height: 248px;
+  }
+  .promo__title {
+    font-size: 31px;
+    line-height: 1.25;
+  }
+  .promo__footer-nav-link {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+  .promo__footer-nav-li {
+    margin-right: 24px;
+}
+}
