@@ -29,14 +29,11 @@ function MoviesCardList() {
     window.addEventListener('resize', getWindowDimensions);
   }, []);
 
-  // useEffect(() => {
-  //   if (!listItems) {
-  //     setBlockButton('movies-card-list__addItems_none');
-  //   }
-  // });
-
   function handleClick() {
     setAddItems(true);
+    if (items.length) {
+      setBlockButton('movies-card-list__addItems_none');
+    }
   }
 
   function cardLike() {
@@ -52,7 +49,7 @@ function MoviesCardList() {
     <div className='movies-card-list'>
       <ul className='movies-card-list__ul'>
         <Switch>
-          <Route exact path='/movies'>
+          <Route path='/movies'>
             {items.slice(0, itemsList).map((data, _id) => {
               return (
                 <MoviesCard
@@ -66,8 +63,13 @@ function MoviesCardList() {
               );
             })}
           </Route>
-          <Route path='/saved-movies'>
+          <Route exact path='/saved-movies'>
             {saveItems.map((data, _id) => {
+              useEffect(() => {
+                if (location.pathname === '/saved-movies') {
+                  setBlockButton('movies-card-list__addItems_none');
+                }
+              });
               return (
                 <MoviesCard
                   key={_id}
@@ -85,7 +87,7 @@ function MoviesCardList() {
       </ul>
       <div className={blockButton}>
         <button
-          className='movies-card-list__addItems-button'
+          className={`movies-card-list__addItems-button`}
           onClick={handleClick}>
           Ещё
         </button>
