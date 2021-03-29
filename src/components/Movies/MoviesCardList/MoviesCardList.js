@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { items, itemsSave } from '../../../utils/api/movies';
 import MoviesCard from '../MoviesCard/MoviesCard';
@@ -10,12 +10,30 @@ function MoviesCardList() {
   const [saveItems, setSaveItems] = useState(itemsSave);
   const [itemLike, setItemLike] = useState(iconDislike);
   const [addItems, setAddItems] = useState(false);
-  const listItems = addItems ? items.length : 8;
+  const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
+  const [screen, setScreen] = useState(window.innerWidth);
+  const listItems = addItems ? items.length : 16;
+  const listItemsMin = addItems ? items.length : 8;
 
-//   { typeof window !== 'undefined' 
-//   ? window.innerWidth <= 400 ? <SiteNavLogoMobile /> : <SiteNavLogo/> 
-//   : null
-// }
+  const itemsList = screen >= 768 ? listItems : listItemsMin;
+
+  useEffect(() => {
+    function getWindowDimensions() {
+      const { innerWidth: width, innerHeight: height } = window;
+      setScreen(width);
+      return {
+        width,
+        height,
+      };
+    }
+    window.addEventListener('resize', getWindowDimensions);
+  }, []);
+
+  // useEffect(() => {
+  //   if (!listItems) {
+  //     setBlockButton('movies-card-list__addItems_none');
+  //   }
+  // });
 
   function handleClick() {
     setAddItems(true);
@@ -35,7 +53,7 @@ function MoviesCardList() {
       <ul className='movies-card-list__ul'>
         <Switch>
           <Route exact path='/movies'>
-            {items.slice(0, listItems).map((data, _id) => {
+            {items.slice(0, itemsList).map((data, _id) => {
               return (
                 <MoviesCard
                   key={_id}
@@ -65,7 +83,7 @@ function MoviesCardList() {
           </Route>
         </Switch>
       </ul>
-      <div className='movies-card-list__addItems'>
+      <div className={blockButton}>
         <button
           className='movies-card-list__addItems-button'
           onClick={handleClick}>
