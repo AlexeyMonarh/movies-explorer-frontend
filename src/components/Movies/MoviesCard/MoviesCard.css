@@ -61,9 +61,11 @@
   color: #a0a0a0;
 }
 
-@media screen and (max-width: 330px) {
+@media screen and (max-width: 632px) {
   .movies-card {
-    min-width: 0;
-    max-width: 270px;
+    max-width: auto;
+  }
+  .movies-card__description-button_none {
+    opacity: 1;
   }
 }

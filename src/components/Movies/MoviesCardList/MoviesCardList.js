@@ -11,23 +11,10 @@ function MoviesCardList() {
   const [itemLike, setItemLike] = useState(iconDislike);
   const [addItems, setAddItems] = useState(false);
   const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
-  const [screen, setScreen] = useState(window.innerWidth);
   const listItems = addItems ? items.length : 16;
   const listItemsMin = addItems ? items.length : 8;
 
   const itemsList = screen >= 769 ? listItems : listItemsMin;
-
-  useEffect(() => {
-    function getWindowDimensions() {
-      const { innerWidth: width, innerHeight: height } = window;
-      setScreen(width);
-      return {
-        width,
-        height,
-      };
-    }
-    window.addEventListener('resize', getWindowDimensions);
-  }, []);
 
   useEffect(() => {
     if (location.pathname === '/saved-movies') {
@@ -88,7 +75,7 @@ function MoviesCardList() {
       </ul>
       <div className={blockButton}>
         <button
-          className={`movies-card-list__addItems-button`}
+          className={`movies-card-list__addItems-button link_hover`}
           onClick={handleClick}>
           Ещё
         </button>

@@ -14,17 +14,17 @@ function Promo() {
       </h1>
       <div className='promo__footer'>
         <ul className='promo__footer-nav'>
-          <li className='promo__footer-nav-li'>
+          <li className='promo__footer-nav-li link_hover'>
             <a href='#about-project' className='promo__footer-nav-link'>
               О проекте
             </a>
           </li>
-          <li className='promo__footer-nav-li'>
+          <li className='promo__footer-nav-li link_hover'>
             <a href='#techs' className='promo__footer-nav-link'>
               Технологии
             </a>
           </li>
-          <li className='promo__footer-nav-li'>
+          <li className='promo__footer-nav-li link_hover'>
             <a href='#about-me' className='promo__footer-nav-link'>
               Студент
             </a>

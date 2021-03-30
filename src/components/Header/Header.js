@@ -8,7 +8,7 @@ function Header(props) {
     <header className='header'>
       <div className={`header__main ${props.background}`}>
         <Link to='/'>
-          <img src={logo} alt='Логотип' className='header__logo' />
+          <img src={logo} alt='Логотип' className='header__logo link_hover' />
         </Link>
         <Navigation />
       </div>

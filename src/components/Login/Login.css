@@ -109,3 +109,35 @@
 .identification__link:hover {
   opacity: 0.8;
 }
+
+@media screen and (max-width: 474px) {
+  .identification {
+    height: 89vh;
+    align-items: center;
+  }
+  .identification__form {
+    width: 81vw;
+    align-items: center;
+  }
+  .identification__form-items {
+    width: 100%;
+  }
+  .identification__form-item-heading {
+    text-align: center;
+  }
+  .identification__buttons {
+    width: 100%;
+  }
+  .identification__button {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .identification__span {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+  .identification__link {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

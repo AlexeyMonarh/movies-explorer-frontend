@@ -1,19 +1,21 @@
 .profile {
   display: flex;
   flex-direction: column;
+  height: 98vh;
 }
 
 .profile-block {
+  margin-top: -80px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 74px 70px;
-  height: 69vh;
+  height: 90vh;
 }
 
 .profile-block__title {
   margin: 0;
+  margin-top: 10rem;
   font-weight: 500;
   font-size: 24px;
   line-height: 1.2;
@@ -22,7 +24,8 @@
 .profile-block__form {
   display: flex;
   flex-direction: column;
-  width: 410px;
+  width: 100%;
+  max-width: 410px;
   height: 45vh;
   justify-content: space-between;
 }
@@ -90,4 +93,34 @@
   font-size: 13px;
   line-height: 1.2;
   text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-block__title {
+    margin-top: 15rem;
+    margin-bottom: 90px;
+  }
+  .profile-block {
+    min-height: 73vh;
+  }
+}
+
+@media screen and (max-width: 464px) {
+  .profile-block__title {
+    margin-top: 9rem;
+    margin-bottom: 80px;
+  }
+  .profile-block {
+    justify-content: start;
+    height: 95vh;
+  }
+  .profile-block__form {
+    height: 63vh;
+  }
+  .profile-block__form-items {
+    margin: 0 30px;
+  }
+  .profile-block__form-link {
+    font-size: 12px;
+  }
 }

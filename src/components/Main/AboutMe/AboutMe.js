@@ -13,11 +13,11 @@ function AboutMe() {
           </h3>
           <p className='about-me__data-paragraph'>
             Родился в городе Хабаровск, закончил факультет экономики АмГУ. Я
-            люблю спорт в любом его проявлении, а ещё я заядлый киноман. Недавно
-            начал кодить. С марта 2020 года прохожу обучение в
-            Яндекс.Практикуме. После окончания курса по веб-разработке, начал
-            заниматься фриланс-заказами и ушёл с постоянной работы. Планирую
-            стать асом Веб-разработки. Сейчас осваиваю Angular.
+            искренне верю что терпение и труд всё перетрут. Недавно начал
+            кодить. С марта 2020 года прохожу обучение в Яндекс.Практикуме.
+            После окончания курса по веб-разработке, начал заниматься
+            фриланс-заказами и ушёл с постоянной работы. Планирую стать асом
+            Веб-разработки. Сейчас осваиваю Angular.
           </p>
         </div>
         <img src={fotoStudent} alt='Фото' className='about-me__block-img' />
@@ -25,12 +25,14 @@ function AboutMe() {
       <div className='about-me__contacts'>
         <a
           href='https://www.instagram.com/monarh_web/'
-          className='about-me__contacts-item'>
+          target='_blank'
+          className='about-me__contacts-item link_hover'>
           Instagram
         </a>
         <a
           href='https://github.com/AlexeyMonarh'
-          className='about-me__contacts-item'>
+          target='_blank'
+          className='about-me__contacts-item link_hover'>
           GitHub
         </a>
       </div>
