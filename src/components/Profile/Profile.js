@@ -77,12 +77,12 @@ function Profile() {
               <div className='profile-block__form-buttons'>
                 <button
                   type='submit'
-                  className='profile-block__form-button'
+                  className='profile-block__form-button link_hover'
                   disabled={!isValid && !dirty}
                   onClick={handleSubmit}>
                   Редактировать
                 </button>
-                <Link className='profile-block__form-link' to='/'>
+                <Link className='profile-block__form-link link_hover' to='/'>
                   Выйти из аккаунта
                 </Link>
               </div>

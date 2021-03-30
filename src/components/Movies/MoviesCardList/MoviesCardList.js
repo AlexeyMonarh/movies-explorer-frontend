@@ -11,10 +11,26 @@ function MoviesCardList() {
   const [itemLike, setItemLike] = useState(iconDislike);
   const [addItems, setAddItems] = useState(false);
   const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
-  const listItems = addItems ? items.length : 16;
+  const [screen, setScreen] = useState(window.innerWidth);
+  const listItems = items.length;
   const listItemsMin = addItems ? items.length : 8;
-
   const itemsList = screen >= 769 ? listItems : listItemsMin;
+
+  function getWindowDimensions() {
+    setScreen(window.innerWidth);
+  }
+  window.addEventListener('resize', getWindowDimensions);
+
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   simulateSlowNetworkRequest().then(() => {
+  //     if (!isMounted) {
+  //     }
+  //   });
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (location.pathname === '/saved-movies') {

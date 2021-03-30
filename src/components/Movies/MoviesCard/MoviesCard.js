@@ -16,7 +16,7 @@ function MoviesCard(props) {
         <h2 className='movies-card__description-title'>{props.description}</h2>
         <button
           type='submit'
-          className={`movies-card__description-button ${props.displayNone}`}
+          className={`movies-card__description-button link_hover ${props.displayNone}`}
           onClick={cardDelete}>
           <img src={props.buttonImg} alt='Изображение кнопки' />
         </button>
