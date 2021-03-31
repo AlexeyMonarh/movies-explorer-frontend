@@ -1,0 +1,40 @@
+.errorPage {
+  margin: auto auto;
+  text-align: center;
+  padding: 0px 80px;
+  height: 100vh;
+}
+
+.errorPage__img {
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  max-height: 169px;
+  margin-top: 246px;
+}
+
+.errorPage__paragraph {
+  margin-top: 40px;
+  margin-bottom: 208px;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 1.19;
+}
+
+.errorPage__link {
+  text-decoration: none;
+  color: #ff6838;
+}
+
+@media screen and (max-width: 360px) {
+  .errorPage__paragraph {
+    font-size: 12px;
+    line-height: 1.25;
+    margin-top: 0;
+    margin-bottom: 284px;
+  }
+  .errorPage__link {
+    font-size: 12px;
+    line-height: 1.25;
+  }
+}

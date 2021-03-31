@@ -1,0 +1,128 @@
+.about-project {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 110px 70px;
+  height: 100%;
+}
+
+.about-project__title {
+  width: 100%;
+  margin: 0;
+  padding-bottom: 23px;
+  border-bottom: 1px black solid;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+.about-project__block {
+  display: flex;
+  margin-bottom: 110px;
+}
+
+.about-project__block-stages {
+  padding-right: 10px;
+}
+
+.about-project__block-stages-title {
+  margin: 0;
+  margin-top: 70px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.about-project__block-stages-paragraph {
+  margin: 0;
+  margin-top: 26px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.about-project__time-line {
+  display: flex;
+  width: 100%;
+  height: 36px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.about-project__time-line-one-week {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22%;
+  background: #2be080;
+}
+
+.about-project__time-line-four-week {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 78%;
+  background: #f2f2f2;
+}
+
+.about-project__time-line-paragraph {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: #a0a0a0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.about-project__time-line-paragraph-back {
+  width: 22%;
+  text-align: center;
+}
+
+.about-project__time-line-paragraph-front {
+  width: 78%;
+  text-align: center;
+}
+
+@media screen and (max-width: 548px) {
+  .about-project {
+    padding: 70px 18px;
+  }
+  .about-project__title {
+    padding-bottom: 28px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+  .about-project__block {
+    flex-direction: column;
+    margin-bottom: 110px;
+  }
+  .about-project__block-stages-title {
+    margin-top: 60px;
+    font-size: 18px;
+    line-height: 1.22;
+  }
+  .about-project__block-stages-paragraph {
+    margin-top: 16px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+  .about-project__time-line {
+    font-size: 11px;
+    line-height: 1.18;
+  }
+  .about-project__time-line-one-week {
+    width: 42%;
+  }
+  .about-project__time-line-paragraph {
+    font-size: 11px;
+    line-height: 1.18;
+  }
+  .about-project__time-line-paragraph-back {
+    width: 42%;
+  }
+}
