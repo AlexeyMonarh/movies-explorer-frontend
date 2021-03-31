@@ -10,6 +10,7 @@
 }
 
 .search-form__search-input {
+  box-shadow: none;
   box-sizing: border-box;
   padding: 20px 16px;
   color: #a0a0a0;
@@ -22,6 +23,9 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 1.3;
+}
+.search-form__search-input:focus {
+  border: 1px #ff6838 solid;
 }
 
 .search-form__search-button {

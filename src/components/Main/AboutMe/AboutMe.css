@@ -1,7 +1,7 @@
 .about-me {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   padding: 90px 70px;
   height: 100%;
 }
@@ -39,6 +39,7 @@
 }
 
 .about-me__data-paragraph {
+  padding-right: 10px;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.6;
@@ -99,7 +100,7 @@
   }
 }
 
-@media screen and (max-width: 548px) {
+@media screen and (max-width: 600px) {
   .about-me {
     padding: 70px 14px;
   }

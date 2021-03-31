@@ -9,6 +9,7 @@ function SearchForm() {
           type='search'
           className='search-form__search-input'
           placeholder='Фильм'
+          required
         />
         <button type='submit' className='search-form__search-button link_hover'>
           <img src={iconSearch} alt='Иконка поиска' />
