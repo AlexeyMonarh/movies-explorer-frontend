@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, Link, useHistory } from 'react-router-dom';
 import imgAccount from '../../images/svg/icon-account.svg';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 
 function Navigation() {
+  const history = useHistory();
   const [sidebar, setSidebar] = useState(false);
   const [overlay, setOverlay] = useState(false);
 
@@ -23,17 +24,23 @@ function Navigation() {
             </Link>
           </li>
           <li>
-            <Link to='/signin' className='nav__link'>
-              <button className='nav__button link_hover'>Войти</button>
-            </Link>
+            <button
+              onClick={() => {
+                history.push('/signin');
+              }}
+              className='nav__button link_hover'>
+              Войти
+            </button>
           </li>
         </ul>
       </Route>
       <Route>
-        <IconContext.Provider
-          value={{ color: '#000' }}>
+        <IconContext.Provider value={{ color: '#000' }}>
           <Link to='#' className={`nav__bar`}>
-            <FaIcons.FaBars className='nav__bar-icon link_hover' onClick={showSidebar} />
+            <FaIcons.FaBars
+              className='nav__bar-icon link_hover'
+              onClick={showSidebar}
+            />
           </Link>
           <div className={overlay ? 'overlay active' : 'overlay'}></div>
           <nav className={sidebar ? 'nav__menu active' : 'nav__menu'}>
@@ -57,16 +64,18 @@ function Navigation() {
                 </Link>
               </li>
             </ul>
-            <Link to='/profile' className='nav__button-link'>
-              <button className='nav__button nav__button_movies link_hover'>
-                <img
-                  src={imgAccount}
-                  alt='Иконка аккаунта'
-                  className='nav__button-img'
-                />
-                Аккаунт
-              </button>
-            </Link>
+            <button
+              onClick={() => {
+                history.push('/profile');
+              }}
+              className='nav__button nav__button_movies link_hover'>
+              <img
+                src={imgAccount}
+                alt='Иконка аккаунта'
+                className='nav__button-img'
+              />
+              Аккаунт
+            </button>
           </nav>
         </IconContext.Provider>
       </Route>

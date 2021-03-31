@@ -16,7 +16,7 @@ function SearchForm() {
       </form>
       <label className='search-form__checkbox'>
         <input type='checkbox' className='search-form__checkbox-input' />
-        <div className='search-form__checkbox-text'>Короткометражки</div>
+        <span className='search-form__checkbox-text'>Короткометражки</span>
       </label>
     </div>
   );

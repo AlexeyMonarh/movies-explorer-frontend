@@ -21,6 +21,10 @@
   margin-bottom: 110px;
 }
 
+.about-project__block-stages {
+  padding-right: 10px;
+}
+
 .about-project__block-stages-title {
   margin: 0;
   margin-top: 70px;
@@ -88,7 +92,7 @@
   .about-project {
     padding: 70px 18px;
   }
-  .about-project__title{
+  .about-project__title {
     padding-bottom: 28px;
     font-size: 18px;
     line-height: 1.22;

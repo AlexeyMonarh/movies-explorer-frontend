@@ -145,7 +145,10 @@
     font-size: 18px;
     line-height: 22px;
   }
-  .nav__button-link {
+  .nav__button_movies {
+    width: 100px;
+    height: 32px;
+    margin: 0 auto;
     margin-bottom: 90px;
   }
   .nav__button:focus {
@@ -174,7 +177,6 @@
   .nav__bar {
     padding-top: 9px;
     font-size: 22px;
-
   }
   .nav__menu {
     width: 100vw;
