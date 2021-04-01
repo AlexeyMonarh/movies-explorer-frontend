@@ -13,6 +13,7 @@ import iconLike from '../../images/svg/icon-like.svg';
 import iconDislike from '../../images/svg/icon-dislike.svg';
 
 function App() {
+  const [screen, setScreen] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
   const [saveItems, setSaveItems] = useState(MoviesApi);
   const [itemLike, setItemLike] = useState(iconDislike);
@@ -42,6 +43,11 @@ function App() {
     // }
   }, []);
 
+  function getWindowDimensions() {
+    setScreen(window.innerWidth);
+  }
+  window.addEventListener('resize', getWindowDimensions);
+
   useEffect(() => {
     document.addEventListener('keydown', escFunction, false);
     return () => {
@@ -62,6 +68,7 @@ function App() {
         </Route>
         <Route path='/movies'>
           <Movies
+            screen={screen}
             cardLike={cardLike}
             itemLike={itemLike}
             movies={movies}

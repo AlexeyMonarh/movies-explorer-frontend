@@ -11,16 +11,19 @@ function MoviesCardList(props) {
   // const [itemLike, setItemLike] = useState(iconDislike);
   const [addItems, setAddItems] = useState(false);
   const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
-  const [screen, setScreen] = useState(window.innerWidth);
-  const listItems = props.movies.length;
-  // console.log(props.movies)
-  const listItemsMin = addItems ? props.movies.length : 8;
-  const itemsList = screen >= 769 ? listItems : listItemsMin;
+  // const [screen, setScreen] = useState(window.innerWidth);
+  const listMovies = props.movies.length;
+ 
+  // let listMoviesAddItems = 8;
+  const [listMoviesAdd, setListMoviesAdd] = useState(8);
+  const listMoviesMin = addItems ? listMoviesAdd : listMoviesAdd;
+  console.log(listMoviesAdd)
+  const itemsList = props.screen >= 768 ? listMovies : listMoviesMin;
 
-  function getWindowDimensions() {
-    setScreen(window.innerWidth);
-  }
-  window.addEventListener('resize', getWindowDimensions);
+  // function getWindowDimensions() {
+  //   setScreen(window.innerWidth);
+  // }
+  // window.addEventListener('resize', getWindowDimensions);
 
   // useEffect(() => {
   //   let isMounted = true;
@@ -37,11 +40,13 @@ function MoviesCardList(props) {
     if (location.pathname === '/saved-movies') {
       setBlockButton('movies-card-list__addItems_none');
     }
+
   });
 
   function handleClick() {
     setAddItems(true);
-    if (props.movies.length) {
+    setListMoviesAdd(listMoviesAdd + 30);
+    if (listMoviesAdd >= listMovies) {
       setBlockButton('movies-card-list__addItems_none');
     }
   }
@@ -59,7 +64,7 @@ function MoviesCardList(props) {
     <div className='movies-card-list'>
       <ul className='movies-card-list__ul'>
         <Switch>
-          <Route path='/movies'>
+          <Route exact path='/movies'>
             {props.movies.slice(0, itemsList).map((data, id) => {
               // console.log(data)
               const imgNull = data.image

@@ -13,6 +13,7 @@ function Movies(props) {
       <Header background="header_background" />
       <SearchForm />
       <MoviesCardList
+      screen={props.screen}
       cardLike={props.cardLike}
       itemLike={props.itemLike}
       movies={props.movies}
