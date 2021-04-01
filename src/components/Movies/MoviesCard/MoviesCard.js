@@ -5,6 +5,12 @@ function MoviesCard(props) {
     props.buttonClick(props.id);
   }
 
+  function getTimeFromMins(mins) {
+    let hours = Math.trunc(mins/60);
+    let minutes = mins % 60;
+    return hours + 'ч ' + minutes + 'м';
+};
+
   return (
     <li className='movies-card'>
       <img
@@ -21,7 +27,7 @@ function MoviesCard(props) {
           <img src={props.buttonImg} alt='Изображение кнопки' />
         </button>
       </div>
-      <div className='movies-card__description-time'>1ч 42м</div>
+      <div className='movies-card__description-time'>{getTimeFromMins(props.duration)}</div>
     </li>
   );
 }
