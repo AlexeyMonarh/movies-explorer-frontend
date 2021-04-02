@@ -83,7 +83,7 @@
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 769px) {
   .nav__bar-icon {
     display: initial;
   }

@@ -7,23 +7,12 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import iconX from '../../../images/svg/icon-x.svg';
 
 function MoviesCardList(props) {
-  // const [saveItems, setSaveItems] = useState(itemsSave);
-  // const [itemLike, setItemLike] = useState(iconDislike);
+  // const [saveItems, setSaveItems] = useState();
   const [addItems, setAddItems] = useState(false);
   const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
-  // const [screen, setScreen] = useState(window.innerWidth);
-  const listMovies = props.movies.length;
- 
-  // let listMoviesAddItems = 8;
   const [listMoviesAdd, setListMoviesAdd] = useState(8);
   const listMoviesMin = addItems ? listMoviesAdd : listMoviesAdd;
-  console.log(listMoviesAdd)
-  const itemsList = props.screen >= 768 ? listMovies : listMoviesMin;
-
-  // function getWindowDimensions() {
-  //   setScreen(window.innerWidth);
-  // }
-  // window.addEventListener('resize', getWindowDimensions);
+  const itemsList = props.screen > 769 ? props.movies : listMoviesMin;
 
   // useEffect(() => {
   //   let isMounted = true;
@@ -40,21 +29,17 @@ function MoviesCardList(props) {
     if (location.pathname === '/saved-movies') {
       setBlockButton('movies-card-list__addItems_none');
     }
-
   });
 
   function handleClick() {
     setAddItems(true);
-    setListMoviesAdd(listMoviesAdd + 30);
-    if (listMoviesAdd >= listMovies) {
-      setBlockButton('movies-card-list__addItems_none');
+    setListMoviesAdd(listMoviesAdd + 2);
+
+    if (listMoviesAdd + 2 >= props.movies) {
+      return setBlockButton('movies-card-list__addItems_none');
     }
   }
 
-  // function cardLike() {
-  //   console.log('LIKE');
-  //   setItemLike(iconLike);
-  // }
   // function cardDelete(cardId) {
   //   const newList = saveItems.filter((c) => c.id !== cardId);
   //   return setSaveItems(newList);
@@ -64,9 +49,8 @@ function MoviesCardList(props) {
     <div className='movies-card-list'>
       <ul className='movies-card-list__ul'>
         <Switch>
-          <Route exact path='/movies'>
+          <Route path='/movies'>
             {props.movies.slice(0, itemsList).map((data, id) => {
-              // console.log(data)
               const imgNull = data.image
                 ? `https://api.nomoreparties.co${data.image.url}`
                 : console.log('Невалидный адрес картинки');
@@ -83,14 +67,18 @@ function MoviesCardList(props) {
               );
             })}
           </Route>
-          <Route exact path='/saved-movies'>
+          <Route path='/saved-movies'>
             {props.movies.map((data, id) => {
+              const imgNull = data.image
+                ? `https://api.nomoreparties.co${data.image.url}`
+                : console.log('Невалидный адрес картинки');
               return (
                 <MoviesCard
                   key={id}
                   id={data.id}
-                  img={data.img}
-                  description={data.description}
+                  img={imgNull}
+                  description={data.nameRU}
+                  duration={data.duration}
                   buttonClick={props.cardDelete}
                   buttonImg={iconX}
                   displayNone='movies-card__description-button_none'

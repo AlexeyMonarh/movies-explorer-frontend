@@ -15,7 +15,7 @@ import iconDislike from '../../images/svg/icon-dislike.svg';
 function App() {
   const [screen, setScreen] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
-  const [saveItems, setSaveItems] = useState(MoviesApi);
+  const [saveItems, setSaveItems] = useState([]);
   const [itemLike, setItemLike] = useState(iconDislike);
   function cardLike() {
     console.log('LIKE');
@@ -35,6 +35,7 @@ function App() {
     //       setСurrentUser(res.data);
     //     })
     //     .catch(err);
+
     MoviesApi.getInitialCards()
       .then((res) => {
         setMovies(res);
@@ -72,11 +73,16 @@ function App() {
             cardLike={cardLike}
             itemLike={itemLike}
             movies={movies}
+            saveItems={saveItems}
             cardDelete={cardDelete}
           />
         </Route>
         <Route path='/saved-movies'>
-          <SavedMovies />
+          <SavedMovies
+            screen={screen}
+            saveItems={saveItems}
+            cardDelete={cardDelete}
+          />
         </Route>
         <Route path='/profile'>
           <Profile />
