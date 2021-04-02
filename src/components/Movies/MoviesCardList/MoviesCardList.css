@@ -11,8 +11,7 @@
 }
 
 .movies-card-list__addItems {
-  display: none;
-
+  display: flex;
   height: auto;
   justify-content: center;
   align-items: center;
@@ -34,7 +33,7 @@
   border-radius: 5px;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 1281px) {
   .movies-card-list__ul {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;

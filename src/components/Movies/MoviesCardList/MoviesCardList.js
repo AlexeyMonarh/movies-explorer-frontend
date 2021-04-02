@@ -1,18 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import { items, itemsSave } from '../../../utils/api/movies';
 import MoviesCard from '../MoviesCard/MoviesCard';
 // import iconLike from '../../../images/svg/icon-like.svg';
 // import iconDislike from '../../../images/svg/icon-dislike.svg';
 import iconX from '../../../images/svg/icon-x.svg';
+// import { number } from 'yup/lib/locale';
+
+function init(state) {
+  return { ...state };
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'reset':
+      return init(action.payload);
+
+    default:
+      return state;
+  }
+}
 
 function MoviesCardList(props) {
   // const [saveItems, setSaveItems] = useState();
   const [addItems, setAddItems] = useState(false);
   const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
-  const [listMoviesAdd, setListMoviesAdd] = useState(8);
+  // const [state, dispatch] = useReducer(reducer, { count: 12 }, init);
+  // const [lengthMoviesScreen, setLengthMoviesScreen] = useState(state.count);
+  const [listMoviesAdd, setListMoviesAdd] = useState(state.count);
+
+  // console.log(lengthMoviesScreen)
   const listMoviesMin = addItems ? listMoviesAdd : listMoviesAdd;
-  const itemsList = props.screen > 769 ? props.movies : listMoviesMin;
+  const itemsList = props.screen ? listMoviesMin : listMoviesMin;
 
   // useEffect(() => {
   //   let isMounted = true;
@@ -24,19 +43,39 @@ function MoviesCardList(props) {
   //     isMounted = false;
   //   };
   // }, []);
-
   useEffect(() => {
+    
+    // if (props.screen > 769) {
+    //   setLengthMoviesScreen(12)
+    // }
+    if (props.screen < 769) {
+      dispatch({ type: 'reset', payload: { count: 8 } });
+    }
+    if (props.screen < 480) {
+      dispatch(5);
+    }
     if (location.pathname === '/saved-movies') {
       setBlockButton('movies-card-list__addItems_none');
     }
   });
 
+  // useEffect(() => {});
+
   function handleClick() {
     setAddItems(true);
-    setListMoviesAdd(listMoviesAdd + 2);
-
+    setListMoviesAdd(listMoviesAdd + 3);
+    // if (props.screen > 769) {
+    //   setListMoviesAdd(lengthMoviesScreen + 3);
+    // }
+    // console.log(lengthMoviesScreen);
+    // if (props.screen < 769) {
+    //   setListMoviesAdd(listMoviesAdd + 2);
+    // }
+    // if (props.screen < 480) {
+    //   setListMoviesAdd(lengthMoviesScreen[2]);
+    // }
     if (listMoviesAdd + 2 >= props.movies) {
-      return setBlockButton('movies-card-list__addItems_none');
+      setBlockButton('movies-card-list__addItems_none');
     }
   }
 
@@ -51,9 +90,11 @@ function MoviesCardList(props) {
         <Switch>
           <Route path='/movies'>
             {props.movies.slice(0, itemsList).map((data, id) => {
-              const imgNull = data.image
-                ? `https://api.nomoreparties.co${data.image.url}`
-                : console.log('Невалидный адрес картинки');
+              const imgNull =
+                // data.image
+                // ?
+                `https://api.nomoreparties.co${data.image.url}`;
+              // : console.log('Невалидный адрес картинки');
               return (
                 <MoviesCard
                   key={id}
@@ -69,14 +110,15 @@ function MoviesCardList(props) {
           </Route>
           <Route path='/saved-movies'>
             {props.movies.map((data, id) => {
-              const imgNull = data.image
-                ? `https://api.nomoreparties.co${data.image.url}`
-                : console.log('Невалидный адрес картинки');
+              // const imgNull =
+              // data.image
+              //   ? `https://api.nomoreparties.co${data.image.url}`
+              //   : console.log('Невалидный адрес картинки');
               return (
                 <MoviesCard
                   key={id}
                   id={data.id}
-                  img={imgNull}
+                  // img={data.image.url}
                   description={data.nameRU}
                   duration={data.duration}
                   buttonClick={props.cardDelete}
