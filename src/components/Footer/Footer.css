@@ -7,6 +7,7 @@
   display: flex;
   background: #fafafa;
   padding: 0 70px;
+  margin-top: 150px;
 }
 
 .footer__title {
@@ -42,7 +43,6 @@
 
 @media screen and (max-width: 548px) {
   .footer {
-    margin-top: 150px;
     background: #fff;
     padding: 0 14px;
   }

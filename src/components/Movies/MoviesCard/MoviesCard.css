@@ -66,10 +66,15 @@
     max-width: auto;
   }
   .movies-card__img {
-    height: auto;
-    max-height: 300px;
+    height: 200px;
   }
   .movies-card__description-button_none {
     opacity: 1;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .movies-card__img {
+    height: 151px;
   }
 }

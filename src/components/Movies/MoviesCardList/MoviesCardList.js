@@ -52,7 +52,16 @@ function MoviesCardList(props) {
   useEffect(() => {
     let isMounted = false;
     if (!isMounted) {
-      if (props.screen > 769) {
+      if (props.screen > 1280) {
+        dispatch({
+          type: 'resize',
+          payload: {
+            initialCardsState: { count: 12 },
+            addCardResize: { count: 4 },
+          },
+        });
+      }
+      if (props.screen < 1281) {
         dispatch({
           type: 'resize',
           payload: {
@@ -61,7 +70,7 @@ function MoviesCardList(props) {
           },
         });
       }
-      if (props.screen < 769) {
+      if (props.screen < 929) {
         dispatch({
           type: 'resize',
           payload: {
@@ -70,7 +79,7 @@ function MoviesCardList(props) {
           },
         });
       }
-      if (props.screen < 480) {
+      if (props.screen < 633) {
         dispatch({
           type: 'resize',
           payload: {
