@@ -2,19 +2,29 @@ import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import { items, itemsSave } from '../../../utils/api/movies';
 import MoviesCard from '../MoviesCard/MoviesCard';
-// import iconLike from '../../../images/svg/icon-like.svg';
 // import iconDislike from '../../../images/svg/icon-dislike.svg';
 import iconX from '../../../images/svg/icon-x.svg';
-// import { number } from 'yup/lib/locale';
 
-function init(state) {
+function addCards(state) {
+  // console.log(state);
   return { ...state };
 }
 
 function reducer(state, action) {
+  // console.log(action);
   switch (action.type) {
-    case 'reset':
-      return init(action.payload);
+    case 'resize':
+      return addCards(action.payload);
+
+    case 'addCards':
+      return addCards({
+        initialCardsState: {
+          count: state.initialCardsState.count + state.addCardResize.count,
+        },
+        addCardResize: {
+          count: state.addCardResize.count,
+        },
+      });
 
     default:
       return state;
@@ -22,59 +32,72 @@ function reducer(state, action) {
 }
 
 function MoviesCardList(props) {
-  // const [saveItems, setSaveItems] = useState();
+  let arrayCards = 12;
   const [addItems, setAddItems] = useState(false);
   const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
-  // const [state, dispatch] = useReducer(reducer, { count: 12 }, init);
-  // const [lengthMoviesScreen, setLengthMoviesScreen] = useState(state.count);
-  const [listMoviesAdd, setListMoviesAdd] = useState(state.count);
+  const [listMoviesAdd, dispatch] = useReducer(
+    reducer,
+    { initialCardsState: { count: arrayCards }, addCardResize: { count: 3 } },
+    addCards
+  );
 
-  // console.log(lengthMoviesScreen)
-  const listMoviesMin = addItems ? listMoviesAdd : listMoviesAdd;
+  console.log(listMoviesAdd.initialCardsState.count);
+  // console.log(props.movies.length);
+
+  const listMoviesMin = addItems
+    ? listMoviesAdd.initialCardsState.count
+    : listMoviesAdd.initialCardsState.count;
   const itemsList = props.screen ? listMoviesMin : listMoviesMin;
 
-  // useEffect(() => {
-  //   let isMounted = true;
-  //   simulateSlowNetworkRequest().then(() => {
-  //     if (!isMounted) {
-  //     }
-  //   });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
   useEffect(() => {
-    
-    // if (props.screen > 769) {
-    //   setLengthMoviesScreen(12)
-    // }
-    if (props.screen < 769) {
-      dispatch({ type: 'reset', payload: { count: 8 } });
+    let isMounted = false;
+    if (!isMounted) {
+      if (props.screen > 769) {
+        dispatch({
+          type: 'resize',
+          payload: {
+            initialCardsState: { count: 12 },
+            addCardResize: { count: 3 },
+          },
+        });
+      }
+      if (props.screen < 769) {
+        dispatch({
+          type: 'resize',
+          payload: {
+            initialCardsState: { count: 8 },
+            addCardResize: { count: 2 },
+          },
+        });
+      }
+      if (props.screen < 480) {
+        dispatch({
+          type: 'resize',
+          payload: {
+            initialCardsState: { count: 5 },
+            addCardResize: { count: 1 },
+          },
+        });
+      }
     }
-    if (props.screen < 480) {
-      dispatch(5);
-    }
+    return () => {
+      isMounted = true;
+    };
+  }, [props.screen, dispatch]);
+
+  useEffect(() => {
     if (location.pathname === '/saved-movies') {
+      setBlockButton('movies-card-list__addItems_none');
+    }
+    if (listMoviesAdd.initialCardsState.count == props.movies.length) {
       setBlockButton('movies-card-list__addItems_none');
     }
   });
 
-  // useEffect(() => {});
-
-  function handleClick() {
+  function handleAddCards() {
     setAddItems(true);
-    setListMoviesAdd(listMoviesAdd + 3);
-    // if (props.screen > 769) {
-    //   setListMoviesAdd(lengthMoviesScreen + 3);
-    // }
-    // console.log(lengthMoviesScreen);
-    // if (props.screen < 769) {
-    //   setListMoviesAdd(listMoviesAdd + 2);
-    // }
-    // if (props.screen < 480) {
-    //   setListMoviesAdd(lengthMoviesScreen[2]);
-    // }
-    if (listMoviesAdd + 2 >= props.movies) {
+    dispatch({ type: 'addCards' });
+    if (listMoviesAdd.initialCardsState.count + 1 === props.movies.length) {
       setBlockButton('movies-card-list__addItems_none');
     }
   }
@@ -90,11 +113,9 @@ function MoviesCardList(props) {
         <Switch>
           <Route path='/movies'>
             {props.movies.slice(0, itemsList).map((data, id) => {
-              const imgNull =
-                // data.image
-                // ?
-                `https://api.nomoreparties.co${data.image.url}`;
-              // : console.log('Невалидный адрес картинки');
+              const imgNull = data.image
+                ? `https://api.nomoreparties.co${data.image.url}`
+                : console.log('Невалидный адрес картинки');
               return (
                 <MoviesCard
                   key={id}
@@ -133,7 +154,7 @@ function MoviesCardList(props) {
       <div className={blockButton}>
         <button
           className={`movies-card-list__addItems-button link_hover`}
-          onClick={handleClick}>
+          onClick={handleAddCards}>
           Ещё
         </button>
       </div>
