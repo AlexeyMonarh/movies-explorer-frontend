@@ -8,10 +8,11 @@ function Movies(props) {
   return (
     <div className='movies'>
       <Header background='header_background' />
-      <SearchForm 
-        onSearch={props.onSearch}
-      />
+      <SearchForm onSearch={props.onSearch} />
       <MoviesCardList
+        initPreloader={props.initPreloader}
+        notFound={props.notFound}
+        requestFailed={props.requestFailed}
         screen={props.screen}
         cardLike={props.cardLike}
         itemLike={props.itemLike}

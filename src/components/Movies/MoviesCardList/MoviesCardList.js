@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import { items, itemsSave } from '../../../utils/api/movies';
-// import Preloader from '../Preloader/Preloader';
+import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 // import iconDislike from '../../../images/svg/icon-dislike.svg';
 // import iconX from '../../../images/svg/icon-x.svg';
@@ -125,7 +125,11 @@ function MoviesCardList(props) {
 
   return (
     <div className='movies-card-list'>
-      {/* <Preloader /> */}
+      <Preloader
+        initPreloader={props.initPreloader}
+        notFound={props.notFound}
+        requestFailed={props.requestFailed}
+      />
       <ul className='movies-card-list__ul'>
         <Switch>
           <Route path='/movies'>

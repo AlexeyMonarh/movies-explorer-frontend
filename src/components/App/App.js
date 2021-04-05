@@ -18,34 +18,43 @@ function App() {
   const [screen, setScreen] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
   const [saveItems, setSaveItems] = useState([]);
+  const [preloader, setPreloader] = useState(false);
+  const [notFound, setNotFound] = useState(false);
   const [itemLike, setItemLike] = useState(iconDislike);
-
+  const [requestFailed, setRequestFailed] = useState(false);
   // console.log(movies);
 
-  const onSearch = async (text) => {
-    // console.log(text.search);
+  const onSearch = (text) => {
+    setPreloader(true);
     if (text) {
-      MoviesApi.getInitialMovies().then((arr) => {
-        const fuse = new Fuse(arr, {
-          keys: ['nameRU'],
-          includeScore: 0,
-          includeMatches: true,
-          findAllMatches: true,
-          threshold: 0.1,
-          location: 0,
+      setRequestFailed(false);
+      setNotFound(false);
+      MoviesApi.getInitialMovies()
+        .then((arr) => {
+          const fuse = new Fuse(arr, {
+            keys: ['nameRU'],
+            includeScore: 0,
+            includeMatches: true,
+            findAllMatches: true,
+            threshold: 0.1,
+            location: 0,
+          });
+          const results = fuse.search(text.search);
+          const resultsArray = results.map((result) => result.item);
+          setPreloader(false);
+          if (resultsArray.length === 0) {
+            setNotFound(true);
+          } else {
+            setNotFound(false);
+          }
+          return setMovies(resultsArray);
+        })
+        .catch((err) => {
+          if (err) {
+            setRequestFailed(true);
+          }
         });
-        const results = fuse.search(text.search);
-        const resultsArray = results.map((result) => result.item);
-
-        return setMovies(resultsArray);
-      });
     }
-    // ('/', {
-    //   params: { search: text, nameRU: text },
-    // });
-    // setMovies((prevState) => {
-    //   return { ...prevState, results: results };
-    // });
   };
 
   function cardLike() {
@@ -100,6 +109,9 @@ function App() {
         </Route>
         <Route path='/movies'>
           <Movies
+            initPreloader={preloader}
+            notFound={notFound}
+            requestFailed={requestFailed}
             screen={screen}
             cardLike={cardLike}
             itemLike={itemLike}
