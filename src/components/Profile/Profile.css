@@ -74,6 +74,7 @@
 }
 
 .profile-block__form-button {
+  outline: none;
   border: none;
   background: none;
   cursor: pointer;

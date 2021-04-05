@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import Fuse from 'fuse.js';
+
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -17,6 +19,43 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [saveItems, setSaveItems] = useState([]);
   const [itemLike, setItemLike] = useState(iconDislike);
+
+  const searchOptions = (keys) => (
+    console.log(keys),
+    {
+      shouldSort: true,
+      threshold: 0.6,
+      location: 0,
+      distance: 100,
+      minMatchCharLength: 1,
+      keys: [...keys],
+    }
+  );
+
+  const onSearch = async (text) => {
+    // console.log(MoviesApi.getInitialMovies())
+    MoviesApi.getInitialMovies().then((arr) => {
+      console.log(arr);
+      if (text) {
+        arr.map((movies) => {
+          const fuse = new Fuse(movies, searchOptions(["nameRU"]));
+          const result = fuse.search(text.search);
+          console.log(fuse._docs.nameRU);
+          return result;
+          // setMovies(result);
+        });
+        //  return console.log(results);
+      }
+    });
+
+    // ('/', {
+    //   params: { search: text, nameRU: text },
+    // });
+    // setMovies((prevState) => {
+    //   return { ...prevState, results: results };
+    // });
+  };
+
   function cardLike() {
     console.log('LIKE');
     setItemLike(iconLike);
@@ -26,23 +65,23 @@ function App() {
     return setSaveItems(newList);
   }
 
-  useEffect(() => {
-    // if (loggedIn) {
-    //   history.push("/");
-    //   api
-    //     .getUser()
-    //     .then((res) => {
-    //       setСurrentUser(res.data);
-    //     })
-    //     .catch(err);
+  // useEffect(() => {
+  //   // if (loggedIn) {
+  //   //   history.push("/");
+  //   //   api
+  //   //     .getUser()
+  //   //     .then((res) => {
+  //   //       setСurrentUser(res.data);
+  //   //     })
+  //   //     .catch(err);
 
-    MoviesApi.getInitialCards()
-      .then((res) => {
-        setMovies(res);
-      })
-      .catch();
-    // }
-  }, []);
+  //   MoviesApi.getInitialCards()
+  //     .then((res) => {
+  //       setMovies(res);
+  //     })
+  //     .catch();
+  //   // }
+  // }, []);
 
   function getWindowDimensions() {
     setScreen(window.innerWidth);
@@ -74,6 +113,7 @@ function App() {
             itemLike={itemLike}
             movies={movies}
             saveItems={saveItems}
+            onSearch={onSearch}
             cardDelete={cardDelete}
           />
         </Route>

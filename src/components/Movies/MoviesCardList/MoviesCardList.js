@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import { items, itemsSave } from '../../../utils/api/movies';
+import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 // import iconDislike from '../../../images/svg/icon-dislike.svg';
 import iconX from '../../../images/svg/icon-x.svg';
@@ -19,10 +20,12 @@ function reducer(state, action) {
     case 'addCards':
       return addCards({
         initialCardsState: {
-          count: state.initialCardsState.count + state.addCardResize.count,
+          arrayCardsList:
+            state.initialCardsState.arrayCardsList +
+            state.addCardResize.arrayCardsList,
         },
         addCardResize: {
-          count: state.addCardResize.count,
+          arrayCardsList: state.addCardResize.arrayCardsList,
         },
       });
 
@@ -32,21 +35,24 @@ function reducer(state, action) {
 }
 
 function MoviesCardList(props) {
-  let arrayCards = 12;
   const [addItems, setAddItems] = useState(false);
   const [blockButton, setBlockButton] = useState('movies-card-list__addItems');
+  let arrayCards = 12;
   const [listMoviesAdd, dispatch] = useReducer(
     reducer,
-    { initialCardsState: { count: arrayCards }, addCardResize: { count: 3 } },
+    {
+      initialCardsState: { arrayCardsList: arrayCards },
+      addCardResize: { arrayCardsList: 3 },
+    },
     addCards
   );
 
-  console.log(listMoviesAdd.initialCardsState.count);
+  // console.log(listMoviesAdd.initialCardsState.arrayCardsList);
   // console.log(props.movies.length);
 
   const listMoviesMin = addItems
-    ? listMoviesAdd.initialCardsState.count
-    : listMoviesAdd.initialCardsState.count;
+    ? listMoviesAdd.initialCardsState.arrayCardsList
+    : listMoviesAdd.initialCardsState.arrayCardsList;
   const itemsList = props.screen ? listMoviesMin : listMoviesMin;
 
   useEffect(() => {
@@ -56,8 +62,8 @@ function MoviesCardList(props) {
         dispatch({
           type: 'resize',
           payload: {
-            initialCardsState: { count: 12 },
-            addCardResize: { count: 4 },
+            initialCardsState: { arrayCardsList: 12 },
+            addCardResize: { arrayCardsList: 4 },
           },
         });
       }
@@ -65,8 +71,8 @@ function MoviesCardList(props) {
         dispatch({
           type: 'resize',
           payload: {
-            initialCardsState: { count: 12 },
-            addCardResize: { count: 3 },
+            initialCardsState: { arrayCardsList: 12 },
+            addCardResize: { arrayCardsList: 3 },
           },
         });
       }
@@ -74,8 +80,8 @@ function MoviesCardList(props) {
         dispatch({
           type: 'resize',
           payload: {
-            initialCardsState: { count: 8 },
-            addCardResize: { count: 2 },
+            initialCardsState: { arrayCardsList: 8 },
+            addCardResize: { arrayCardsList: 2 },
           },
         });
       }
@@ -83,8 +89,8 @@ function MoviesCardList(props) {
         dispatch({
           type: 'resize',
           payload: {
-            initialCardsState: { count: 5 },
-            addCardResize: { count: 1 },
+            initialCardsState: { arrayCardsList: 5 },
+            addCardResize: { arrayCardsList: 1 },
           },
         });
       }
@@ -98,7 +104,10 @@ function MoviesCardList(props) {
     if (location.pathname === '/saved-movies') {
       setBlockButton('movies-card-list__addItems_none');
     }
-    if (listMoviesAdd.initialCardsState.count == props.movies.length) {
+    if (listMoviesAdd.initialCardsState.arrayCardsList == props.movies.length) {
+      setBlockButton('movies-card-list__addItems_none');
+    }
+    if (listMoviesAdd.initialCardsState.arrayCardsList !== 3) {
       setBlockButton('movies-card-list__addItems_none');
     }
   });
@@ -106,7 +115,10 @@ function MoviesCardList(props) {
   function handleAddCards() {
     setAddItems(true);
     dispatch({ type: 'addCards' });
-    if (listMoviesAdd.initialCardsState.count + 1 === props.movies.length) {
+    if (
+      listMoviesAdd.initialCardsState.arrayCardsList + 1 ===
+      props.movies.length
+    ) {
       setBlockButton('movies-card-list__addItems_none');
     }
   }
@@ -118,6 +130,7 @@ function MoviesCardList(props) {
 
   return (
     <div className='movies-card-list'>
+      <Preloader />
       <ul className='movies-card-list__ul'>
         <Switch>
           <Route path='/movies'>
@@ -138,7 +151,7 @@ function MoviesCardList(props) {
               );
             })}
           </Route>
-          <Route path='/saved-movies'>
+          {/* <Route path='/saved-movies'>
             {props.movies.map((data, id) => {
               // const imgNull =
               // data.image
@@ -157,7 +170,7 @@ function MoviesCardList(props) {
                 />
               );
             })}
-          </Route>
+          </Route> */}
         </Switch>
       </ul>
       <div className={blockButton}>
