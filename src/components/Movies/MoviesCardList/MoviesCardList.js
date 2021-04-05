@@ -1,38 +1,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import { items, itemsSave } from '../../../utils/api/movies';
-import Preloader from '../Preloader/Preloader';
+// import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 // import iconDislike from '../../../images/svg/icon-dislike.svg';
-import iconX from '../../../images/svg/icon-x.svg';
-
-function addCards(state) {
-  // console.log(state);
-  return { ...state };
-}
-
-function reducer(state, action) {
-  // console.log(action);
-  switch (action.type) {
-    case 'resize':
-      return addCards(action.payload);
-
-    case 'addCards':
-      return addCards({
-        initialCardsState: {
-          arrayCardsList:
-            state.initialCardsState.arrayCardsList +
-            state.addCardResize.arrayCardsList,
-        },
-        addCardResize: {
-          arrayCardsList: state.addCardResize.arrayCardsList,
-        },
-      });
-
-    default:
-      return state;
-  }
-}
+// import iconX from '../../../images/svg/icon-x.svg';
 
 function MoviesCardList(props) {
   const [addItems, setAddItems] = useState(false);
@@ -46,6 +18,34 @@ function MoviesCardList(props) {
     },
     addCards
   );
+
+  function addCards(state) {
+    // console.log(state);
+    return { ...state };
+  }
+
+  function reducer(state, action) {
+    // console.log(action);
+    switch (action.type) {
+      case 'resize':
+        return addCards(action.payload);
+
+      case 'addCards':
+        return addCards({
+          initialCardsState: {
+            arrayCardsList:
+              state.initialCardsState.arrayCardsList +
+              state.addCardResize.arrayCardsList,
+          },
+          addCardResize: {
+            arrayCardsList: state.addCardResize.arrayCardsList,
+          },
+        });
+
+      default:
+        return state;
+    }
+  }
 
   // console.log(listMoviesAdd.initialCardsState.arrayCardsList);
   // console.log(props.movies.length);
@@ -101,26 +101,21 @@ function MoviesCardList(props) {
   }, [props.screen, dispatch]);
 
   useEffect(() => {
-    if (location.pathname === '/saved-movies') {
+    if (
+      props.movies.length == 0 ||
+      props.movies.length < 3 ||
+      listMoviesAdd.initialCardsState.arrayCardsList >= props.movies.length ||
+      location.pathname === '/saved-movies'
+    ) {
       setBlockButton('movies-card-list__addItems_none');
-    }
-    if (listMoviesAdd.initialCardsState.arrayCardsList == props.movies.length) {
-      setBlockButton('movies-card-list__addItems_none');
-    }
-    if (listMoviesAdd.initialCardsState.arrayCardsList !== 3) {
-      setBlockButton('movies-card-list__addItems_none');
+    } else {
+      setBlockButton('movies-card-list__addItems');
     }
   });
 
   function handleAddCards() {
     setAddItems(true);
     dispatch({ type: 'addCards' });
-    if (
-      listMoviesAdd.initialCardsState.arrayCardsList + 1 ===
-      props.movies.length
-    ) {
-      setBlockButton('movies-card-list__addItems_none');
-    }
   }
 
   // function cardDelete(cardId) {
@@ -130,7 +125,7 @@ function MoviesCardList(props) {
 
   return (
     <div className='movies-card-list'>
-      <Preloader />
+      {/* <Preloader /> */}
       <ul className='movies-card-list__ul'>
         <Switch>
           <Route path='/movies'>

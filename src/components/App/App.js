@@ -20,34 +20,26 @@ function App() {
   const [saveItems, setSaveItems] = useState([]);
   const [itemLike, setItemLike] = useState(iconDislike);
 
-  const searchOptions = (keys) => (
-    console.log(keys),
-    {
-      shouldSort: true,
-      threshold: 0.6,
-      location: 0,
-      distance: 100,
-      minMatchCharLength: 1,
-      keys: [...keys],
-    }
-  );
+  // console.log(movies);
 
   const onSearch = async (text) => {
-    // console.log(MoviesApi.getInitialMovies())
-    MoviesApi.getInitialMovies().then((arr) => {
-      console.log(arr);
-      if (text) {
-        arr.map((movies) => {
-          const fuse = new Fuse(movies, searchOptions(["nameRU"]));
-          const result = fuse.search(text.search);
-          console.log(fuse._docs.nameRU);
-          return result;
-          // setMovies(result);
+    // console.log(text.search);
+    if (text) {
+      MoviesApi.getInitialMovies().then((arr) => {
+        const fuse = new Fuse(arr, {
+          keys: ['nameRU'],
+          includeScore: 0,
+          includeMatches: true,
+          findAllMatches: true,
+          threshold: 0.1,
+          location: 0,
         });
-        //  return console.log(results);
-      }
-    });
+        const results = fuse.search(text.search);
+        const resultsArray = results.map((result) => result.item);
 
+        return setMovies(resultsArray);
+      });
+    }
     // ('/', {
     //   params: { search: text, nameRU: text },
     // });
