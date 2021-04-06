@@ -6,10 +6,14 @@ function MoviesCard(props) {
   }
 
   function getTimeFromMins(mins) {
-    let hours = Math.trunc(mins/60);
+    let hours = Math.trunc(mins / 60);
     let minutes = mins % 60;
-    return hours + 'ч ' + minutes + 'м';
-};
+    if (mins >= 60) {
+      return hours + 'ч ' + minutes + 'м';
+    } else {
+      return minutes + 'м';
+    }
+  }
 
   return (
     <li className='movies-card'>
@@ -27,7 +31,9 @@ function MoviesCard(props) {
           <img src={props.buttonImg} alt='Изображение кнопки' />
         </button>
       </div>
-      <div className='movies-card__description-time'>{getTimeFromMins(props.duration)}</div>
+      <div className='movies-card__description-time'>
+        {getTimeFromMins(props.duration)}
+      </div>
     </li>
   );
 }

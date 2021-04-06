@@ -22,7 +22,8 @@ function App() {
   const [notFound, setNotFound] = useState(false);
   const [itemLike, setItemLike] = useState(iconDislike);
   const [requestFailed, setRequestFailed] = useState(false);
-  // console.log(movies);
+  const [onCheckbox, setOnCheckbox] = useState(false);
+  // console.log(onCheckbox);
 
   const onSearch = (text) => {
     setPreloader(true);
@@ -40,6 +41,17 @@ function App() {
             location: 0,
           });
           const results = fuse.search(text.search);
+          if (onCheckbox === true) {
+            const newResults = results.filter((c) => c.item.duration <= 40);
+            const newResultsArr = newResults.map((result) => result.item);
+            setPreloader(false);
+            if (newResultsArr.length === 0) {
+              setNotFound(true);
+            } else {
+              setNotFound(false);
+            }
+            return setMovies(newResultsArr);
+          }
           const resultsArray = results.map((result) => result.item);
           setPreloader(false);
           if (resultsArray.length === 0) {
@@ -109,6 +121,8 @@ function App() {
         </Route>
         <Route path='/movies'>
           <Movies
+            setOnCheckbox={setOnCheckbox}
+            onCheckbox={onCheckbox}
             initPreloader={preloader}
             notFound={notFound}
             requestFailed={requestFailed}

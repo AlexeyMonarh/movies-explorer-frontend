@@ -4,9 +4,12 @@ import validationSchema from '../../../utils/FormValidator/FormValidatorSearchMo
 import { Formik } from 'formik';
 
 function SearchForm(props) {
-  const [searchMovies, setSearchMovies] = useState('');
+  // const [searchMovies, setSearchMovies] = useState('');
   // console.log(props)
-
+  function toggleCheckbox() {
+    props.setOnCheckbox(!props.onCheckbox);
+  }
+  
   return (
     <div className='search-form'>
       <Formik
@@ -15,8 +18,8 @@ function SearchForm(props) {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          setSearchMovies(values);
-          props.onSearch(values)
+          // setSearchMovies(values);
+          props.onSearch(values);
         }}
         validationSchema={validationSchema}>
         {({
@@ -57,7 +60,9 @@ function SearchForm(props) {
       </Formik>
       <label className='search-form__checkbox'>
         <input type='checkbox' className='search-form__checkbox-input' />
-        <span className='search-form__checkbox-text'>Короткометражки</span>
+        <span className='search-form__checkbox-text' onClick={toggleCheckbox}>
+          Короткометражки
+        </span>
       </label>
     </div>
   );

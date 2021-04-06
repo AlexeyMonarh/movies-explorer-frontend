@@ -74,8 +74,6 @@
 }
 
 .preloader__not-found_init {
-  /* display: initial; */
-
   display: flex;
   align-items: center;
   justify-content: center;

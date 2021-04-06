@@ -8,7 +8,11 @@ function Movies(props) {
   return (
     <div className='movies'>
       <Header background='header_background' />
-      <SearchForm onSearch={props.onSearch} />
+      <SearchForm
+        onSearch={props.onSearch}
+        setOnCheckbox={props.setOnCheckbox}
+        onCheckbox={props.onCheckbox}
+      />
       <MoviesCardList
         initPreloader={props.initPreloader}
         notFound={props.notFound}
