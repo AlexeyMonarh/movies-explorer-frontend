@@ -20,12 +20,10 @@ function MoviesCardList(props) {
   );
 
   function addCards(state) {
-    // console.log(state);
     return { ...state };
   }
 
   function reducer(state, action) {
-    // console.log(action);
     switch (action.type) {
       case 'resize':
         return addCards(action.payload);
@@ -41,14 +39,10 @@ function MoviesCardList(props) {
             arrayCardsList: state.addCardResize.arrayCardsList,
           },
         });
-
       default:
         return state;
     }
   }
-
-  // console.log(listMoviesAdd.initialCardsState.arrayCardsList);
-  // console.log(props.movies.length);
 
   const listMoviesMin = addItems
     ? listMoviesAdd.initialCardsState.arrayCardsList
@@ -118,11 +112,6 @@ function MoviesCardList(props) {
     dispatch({ type: 'addCards' });
   }
 
-  // function cardDelete(cardId) {
-  //   const newList = saveItems.filter((c) => c.id !== cardId);
-  //   return setSaveItems(newList);
-  // }
-
   return (
     <div className='movies-card-list'>
       <Preloader
@@ -140,11 +129,12 @@ function MoviesCardList(props) {
               return (
                 <MoviesCard
                   key={id}
+                  data={data}
                   id={data.id}
                   img={imgNull}
                   description={data.nameRU}
                   duration={data.duration}
-                  buttonClick={props.cardLike}
+                  buttonLikeClick={props.cardLike}
                   buttonImg={props.itemLike}
                 />
               );
@@ -163,7 +153,7 @@ function MoviesCardList(props) {
                   // img={data.image.url}
                   description={data.nameRU}
                   duration={data.duration}
-                  buttonClick={props.cardDelete}
+                  buttonLikeClick={props.cardDelete}
                   buttonImg={iconX}
                   displayNone='movies-card__description-button_none'
                 />

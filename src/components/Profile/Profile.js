@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import validationSchema from '../../utils/FormValidator/FormValidatorProfile';
 import Header from '../Header/Header';
 
-function Profile() {
+function Profile(props) {
   return (
     <div className='profile'>
       <Header background='header_background' />
@@ -82,7 +82,7 @@ function Profile() {
                   onClick={handleSubmit}>
                   Редактировать
                 </button>
-                <Link className='profile-block__form-link link_hover' to='/'>
+                <Link className='profile-block__form-link link_hover' onClick={props.signOut}>
                   Выйти из аккаунта
                 </Link>
               </div>

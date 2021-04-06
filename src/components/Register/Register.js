@@ -4,7 +4,26 @@ import { Formik } from 'formik';
 import validationSchema from '../../utils/FormValidator/FormValidatorRegister';
 import logo from '../../images/svg/logo.svg';
 
-function Register() {
+function Register(props) {
+  // const [inputValue, setInputValue] = useState({
+  //   name: '',
+  //   email: '',
+  //   password: '',
+  // });
+
+  // function handleChange(e) {
+  //   const { name, value } = e.target;
+  //   setInputValue({
+  //     ...inputValue,
+  //     [name]: value,
+  //   });
+  // }
+
+  // function habdleSubmite(e) {
+  //   e.preventDefault();
+  //   onRegister(inputValue);
+  // }
+
   return (
     <div className='identification'>
       <Link to='/'>
@@ -18,7 +37,7 @@ function Register() {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          console.log(values);
+          props.handleRegister(values)
         }}
         validationSchema={validationSchema}>
         {({

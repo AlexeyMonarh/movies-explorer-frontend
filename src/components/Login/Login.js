@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import validationSchema from '../../utils/FormValidator/FormValidatorLogin';
 import logo from '../../images/svg/logo.svg';
 
-function Login() {
+function Login(props) {
   return (
     <div className='identification'>
       <Link to='/'>
@@ -17,7 +17,8 @@ function Login() {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          console.log(values);
+          // console.log(values);
+          props.handleLogin(values)
         }}
         validationSchema={validationSchema}>
         {({

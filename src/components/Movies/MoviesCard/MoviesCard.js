@@ -1,8 +1,13 @@
 import React from 'react';
 
 function MoviesCard(props) {
+
+  function cardSave (){
+    props.buttonLikeClick(props.data)
+  }
+
   function cardDelete() {
-    props.buttonClick(props.id);
+    props.buttonLikeClick(props.id);
   }
 
   function getTimeFromMins(mins) {
@@ -27,7 +32,7 @@ function MoviesCard(props) {
         <button
           type='submit'
           className={`movies-card__description-button link_hover ${props.displayNone}`}
-          onClick={cardDelete}>
+          onClick={cardSave}>
           <img src={props.buttonImg} alt='Изображение кнопки' />
         </button>
       </div>

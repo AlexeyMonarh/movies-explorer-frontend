@@ -11,6 +11,8 @@
 @import url('../src/components/Footer/Footer.css');
 @import url('../src/components/404/ErrorPage.css');
 @import url('../src/utils/FormValidator/FormValidator.css');
+@import url('../src/components/InfoTooltip/InfoTooltip.css');
+@import url('../src/components/PopupWithForm/PopupWithForm.css');
 
 .page {
   -moz-osx-font-smoothing: grayscale;
