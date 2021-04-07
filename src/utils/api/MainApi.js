@@ -22,7 +22,7 @@ class MainApi {
   // }
 
   getUser() {
-    return fetch(this._baseUrl + '/users/me', {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     }).then(thenMainApi)
   }
@@ -93,9 +93,9 @@ class MainApi {
 const api = new MainApi({
   baseUrl: 'https://api.diploma-praktikum.students.nomoredomains.monster',
   headers: {
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDRlMWYxYTU2ZTlhYTZiNGI1M2M5ZTAiLCJpYXQiOjE2MTc3MjgzNjIsImV4cCI6MTYxODMzMzE2Mn0.k2zlYPzYiLjwVPH72FgmzEmu32BpuLVecia-arvrRXs`,
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   }
 });
-// ${localStorage.getItem('jwt')}
+
 export default api;

@@ -89,11 +89,12 @@
 
 .profile-block__form-link {
   color: #ee3465;
-  text-decoration: none;
+  /* text-decoration: none; */
   font-weight: 500;
   font-size: 13px;
   line-height: 1.2;
   text-align: center;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {

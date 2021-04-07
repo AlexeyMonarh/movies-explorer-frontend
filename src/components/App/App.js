@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useHistory, Redirect, withRouter } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+  withRouter,
+} from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
@@ -20,6 +26,7 @@ import * as auth from '../../utils/authorization';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 function App() {
+  const [currentUser, setСurrentUser] = useState('');
   const history = useHistory();
   const [screen, setScreen] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
@@ -29,32 +36,28 @@ function App() {
   const [itemLike, setItemLike] = useState(iconDislike);
   const [requestFailed, setRequestFailed] = useState(false);
   const [onCheckbox, setOnCheckbox] = useState(false);
-  const [currentUser, setСurrentUser] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  // const [token, setToken] = useState(false);
   const [infoTool, setInfoTool] = useState({
     message: '',
     img: '',
   });
   const [registerPopup, setRegisterPopup] = useState();
-  const [userData, setUserData] = useState({
-    email: '',
-    password: '',
-  });
   // const err = (res) => {
   //   console.log(`Ошибка: ${res}`);
   // };
 
-  // console.log(currentUser);
+  // console.log(loggedIn);
 
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt');
     if (token) {
+      // history.push('/movies');
       auth
         .getContent(token)
         .then((res) => {
           // console.log(res)
           if (res) {
-            setUserData({ email: res.email });
             setLoggedIn(true);
             setСurrentUser(res);
           }
@@ -65,23 +68,23 @@ function App() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     history.push("/");
-  //     api
-  //       .getUser()
-  //       .then((res) => {
-  //         setСurrentUser(res.data);
-  //       })
-  //       .catch();
-  //     // api
-  //     //   .getInitialCards()
-  //     //   .then((res) => {
-  //     //     setCards(res);
-  //     //   })
-  //     //   .catch();
-  //   }
-  // }, [loggedIn]);
+  useEffect(() => {
+    if (loggedIn) {
+      // location.pathname
+      history.push('/movies');
+      MainApi.getUser()
+        .then((res) => {
+          setСurrentUser(res);
+        })
+        .catch();
+      // api
+      //   .getInitialCards()
+      //   .then((res) => {
+      //     setCards(res);
+      //   })
+      //   .catch();
+    }
+  }, [loggedIn]);
 
   function handleRegister(data) {
     // console.log(data);
@@ -91,7 +94,35 @@ function App() {
       .then((res) => {
         // console.log(res)
         if (res) {
-          history.push('/signin');
+          // history.push('/movies');
+          // auth
+          //   .authorize(email, password)
+          //   .then((res) => {
+          //     if (res.token) {
+          //       localStorage.setItem('jwt', res.token);
+          //       MainApi.setToken(res.token);
+          //       return res.token;
+          //     }
+          //   })
+          //   .then((token) => {
+          //     auth
+          //       .getContent(token)
+          //       .then((res) => {
+          //         console.log(res);
+          //         if (res) {
+          //           setLoggedIn(true);
+          //           // setToken(true);
+          //           setСurrentUser(res);
+          //           history.push('/movies');
+          //         }
+          //       })
+          //       .catch((error) => {
+          //         console.log(`Ошибка: ${error}`);
+          //       });
+          //   })
+          //   .catch((error) => {
+          //     console.log(`Ошибка: ${error}`);
+          //   });
           setRegisterPopup(true);
           setInfoTool({
             message: 'Вы успешно зарегистрировались!',
@@ -102,20 +133,21 @@ function App() {
       .catch((err) => {
         setRegisterPopup(true);
         setInfoTool({
-          message: 'Что-то пошло не так! Попробуйте ещё раз.',
+          message:
+            'Что-то пошло не так! Такой пользователь уже зарегистрирован.',
           img: fail,
         });
-        console.log(`Такой email существует ${err}`);
+        console.log(`Такой email существует в базе данных ${err}`);
       });
   }
 
   function handleLogin(data) {
     // console.log(data);
-    const { email, password } = data;
-    setUserData({ email: email });
+    // const { email, password } = data;
     auth
-      .authorize(email, password)
+      .authorize(data.email, data.password)
       .then((res) => {
+        console.log(res);
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           MainApi.setToken(res.token);
@@ -126,26 +158,38 @@ function App() {
         auth
           .getContent(token)
           .then((res) => {
-            console.log(res)
+            console.log(res);
             if (res) {
-              setUserData({ email: res.email });
               setLoggedIn(true);
+              // setToken(true);
               setСurrentUser(res);
               history.push('/movies');
+              setRegisterPopup(true);
+              setInfoTool({
+                message: `Добро пожаловать ${res.name}! Для поиска фильмов введите запрос в поле ввода`,
+                img: succed,
+              });
             }
           })
           .catch((error) => {
             console.log(`Ошибка: ${error}`);
           });
       })
-
       .catch((error) => {
+        setRegisterPopup(true);
+        setInfoTool({
+          message: 'Что-то пошло не так! Введите правильно данные',
+          img: fail,
+        });
         console.log(`Ошибка: ${error}`);
       });
   }
 
   function signOut() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('movies');
+    setСurrentUser('');
+    setMovies([]);
     setLoggedIn(false);
     history.push('/');
   }
@@ -231,24 +275,6 @@ function App() {
     return setSaveItems(newList);
   }
 
-  // useEffect(() => {
-  //   // if (loggedIn) {
-  //   //   history.push("/");
-  //   //   api
-  //   //     .getUser()
-  //   //     .then((res) => {
-  //   //       setСurrentUser(res.data);
-  //   //     })
-  //   //     .catch(err);
-
-  //   MoviesApi.getInitialCards()
-  //     .then((res) => {
-  //       setMovies(res);
-  //     })
-  //     .catch();
-  //   // }
-  // }, []);
-
   function getWindowDimensions() {
     setScreen(window.innerWidth);
   }
@@ -293,6 +319,7 @@ function App() {
             path='/movies'
             component={Movies}
             loggedIn={loggedIn}
+            // token={token}
             setOnCheckbox={setOnCheckbox}
             onCheckbox={onCheckbox}
             initPreloader={preloader}

@@ -1,19 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import validationSchema from '../../utils/FormValidator/FormValidatorProfile';
 import Header from '../Header/Header';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
+  const currentUser = React.useContext(CurrentUserContext);
+  // console.log(currentUser);
   return (
     <div className='profile'>
       <Header background='header_background' />
       <div className='profile-block'>
-        <h2 className='profile-block__title'>Привет, Виталий!</h2>
+        <h2 className='profile-block__title'>{`Привет, ${currentUser.name}!`}</h2>
         <Formik
+          enableReinitialize={true}
           initialValues={{
-            name: 'Виталий',
-            email: 'pochta@yandex.ru',
+            name: `${currentUser.name}`,
+            email: `${currentUser.email}`,
           }}
           validateOnBlur
           onSubmit={(values) => {
@@ -42,6 +46,7 @@ function Profile(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.name}
+                    placeholder={'Ваше имя'}
                     required
                     className='profile-block__form-input'
                     dir='rtl'
@@ -59,6 +64,7 @@ function Profile(props) {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
+                    placeholder={'Ваша почта'}
                     required
                     autoComplete='off'
                     className='profile-block__form-input'
@@ -71,8 +77,8 @@ function Profile(props) {
                   </label>
                 </div>
                 {touched.email && errors.email && (
-                    <p className='error'>{errors.email}</p>
-                  )}
+                  <p className='error'>{errors.email}</p>
+                )}
               </div>
               <div className='profile-block__form-buttons'>
                 <button
@@ -82,9 +88,11 @@ function Profile(props) {
                   onClick={handleSubmit}>
                   Редактировать
                 </button>
-                <Link className='profile-block__form-link link_hover' onClick={props.signOut}>
+                <span
+                  className='profile-block__form-link link_hover'
+                  onClick={props.signOut}>
                   Выйти из аккаунта
-                </Link>
+                </span>
               </div>
             </form>
           )}

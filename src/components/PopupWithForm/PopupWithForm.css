@@ -15,6 +15,7 @@
 }
 
 .popup_open {
+  z-index: 4;
   display: flex;
   visibility: visible;
   transition: visibility 0.3s, opacity 0.3s ease-in;
