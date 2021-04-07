@@ -140,8 +140,8 @@ function MoviesCardList(props) {
               );
             })}
           </Route>
-          {/* <Route path='/saved-movies'>
-            {props.movies.map((data, id) => {
+          <Route path='/saved-movies'>
+            {props.saveMovie.map((data, id) => {
               // const imgNull =
               // data.image
               //   ? `https://api.nomoreparties.co${data.image.url}`
@@ -159,7 +159,7 @@ function MoviesCardList(props) {
                 />
               );
             })}
-          </Route> */}
+          </Route>
         </Switch>
       </ul>
       <div className={blockButton}>

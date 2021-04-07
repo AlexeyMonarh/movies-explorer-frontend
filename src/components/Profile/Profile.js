@@ -21,7 +21,8 @@ function Profile(props) {
           }}
           validateOnBlur
           onSubmit={(values) => {
-            console.log(values);
+            props.handleUpdateUser(values)
+            // console.log(values);
           }}
           validationSchema={validationSchema}>
           {({
@@ -49,7 +50,6 @@ function Profile(props) {
                     placeholder={'Ваше имя'}
                     required
                     className='profile-block__form-input'
-                    dir='rtl'
                   />
                   <label
                     className='profile-block__form-item-input-label'
@@ -68,7 +68,6 @@ function Profile(props) {
                     required
                     autoComplete='off'
                     className='profile-block__form-input'
-                    dir='rtl'
                   />
                   <label
                     className='profile-block__form-item-input-label'

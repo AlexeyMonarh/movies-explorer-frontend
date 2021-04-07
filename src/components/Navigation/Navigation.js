@@ -5,7 +5,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 
-function Navigation() {
+function Navigation(props) {
   const history = useHistory();
   const [sidebar, setSidebar] = useState(false);
   const [overlay, setOverlay] = useState(false);

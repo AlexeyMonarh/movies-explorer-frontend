@@ -30,7 +30,7 @@ function App() {
   const history = useHistory();
   const [screen, setScreen] = useState(window.innerWidth);
   const [movies, setMovies] = useState([]);
-  const [saveItems, setSaveItems] = useState([]);
+  const [saveMovie, setSaveMovie] = useState([]);
   const [preloader, setPreloader] = useState(false);
   const [notFound, setNotFound] = useState(false);
   const [itemLike, setItemLike] = useState(iconDislike);
@@ -42,12 +42,12 @@ function App() {
     message: '',
     img: '',
   });
-  const [registerPopup, setRegisterPopup] = useState();
+  const [infoPopup, setInfoPopup] = useState();
   // const err = (res) => {
   //   console.log(`Ошибка: ${res}`);
   // };
 
-  // console.log(loggedIn);
+  console.log(currentUser);
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -70,21 +70,51 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      // location.pathname
+      // setLoggedIn(true)
       history.push('/movies');
       MainApi.getUser()
         .then((res) => {
           setСurrentUser(res);
         })
         .catch();
-      // api
-      //   .getInitialCards()
-      //   .then((res) => {
-      //     setCards(res);
-      //   })
-      //   .catch();
     }
   }, [loggedIn]);
+
+  function cardLike(movie) {
+    console.log(movie);
+    MainApi.changeLikeCardStatus(movie)
+      .then((newCard) => {
+        console.log(newCard);
+
+        // const newCards = newCard.map((arr) => arr);
+        // setSaveMovie(newCard);
+      })
+      .catch((res) => {
+        console.log(`Ошибка: ${res}`);
+      });
+
+    // setItemLike(iconLike);
+  }
+  console.log(loggedIn);
+  function handleUpdateUser(data) {
+    // setSavePreload("Сохранение...");
+    MainApi.setUserInfo(data)
+      .then((res) => {
+        setСurrentUser(res);
+        console.log(loggedIn);
+        setInfoPopup(true);
+        setInfoTool({
+          message: 'Данные изменены!',
+          img: succed,
+        });
+        // closeAllPopups();
+      })
+      .catch((err) => console.log(err));
+    // .finally(() => {
+    //   // setSavePreload("Сохранить");
+    //   closeAllPopups();
+    // });
+  }
 
   function handleRegister(data) {
     // console.log(data);
@@ -94,36 +124,36 @@ function App() {
       .then((res) => {
         // console.log(res)
         if (res) {
-          // history.push('/movies');
-          // auth
-          //   .authorize(email, password)
-          //   .then((res) => {
-          //     if (res.token) {
-          //       localStorage.setItem('jwt', res.token);
-          //       MainApi.setToken(res.token);
-          //       return res.token;
-          //     }
-          //   })
-          //   .then((token) => {
-          //     auth
-          //       .getContent(token)
-          //       .then((res) => {
-          //         console.log(res);
-          //         if (res) {
-          //           setLoggedIn(true);
-          //           // setToken(true);
-          //           setСurrentUser(res);
-          //           history.push('/movies');
-          //         }
-          //       })
-          //       .catch((error) => {
-          //         console.log(`Ошибка: ${error}`);
-          //       });
-          //   })
-          //   .catch((error) => {
-          //     console.log(`Ошибка: ${error}`);
-          //   });
-          setRegisterPopup(true);
+          history.push('/movies');
+          auth
+            .authorize(email, password)
+            .then((res) => {
+              if (res.token) {
+                localStorage.setItem('jwt', res.token);
+                MainApi.setToken(res.token);
+                return res.token;
+              }
+            })
+            .then((token) => {
+              auth
+                .getContent(token)
+                .then((res) => {
+                  console.log(res);
+                  if (res) {
+                    setLoggedIn(true);
+                    // setToken(true);
+                    setСurrentUser(res);
+                    history.push('/movies');
+                  }
+                })
+                .catch((error) => {
+                  console.log(`Ошибка: ${error}`);
+                });
+            })
+            .catch((error) => {
+              console.log(`Ошибка: ${error}`);
+            });
+          setInfoPopup(true);
           setInfoTool({
             message: 'Вы успешно зарегистрировались!',
             img: succed,
@@ -131,7 +161,7 @@ function App() {
         }
       })
       .catch((err) => {
-        setRegisterPopup(true);
+        setInfoPopup(true);
         setInfoTool({
           message:
             'Что-то пошло не так! Такой пользователь уже зарегистрирован.',
@@ -147,7 +177,7 @@ function App() {
     auth
       .authorize(data.email, data.password)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           MainApi.setToken(res.token);
@@ -158,13 +188,13 @@ function App() {
         auth
           .getContent(token)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             if (res) {
               setLoggedIn(true);
               // setToken(true);
               setСurrentUser(res);
               history.push('/movies');
-              setRegisterPopup(true);
+              setInfoPopup(true);
               setInfoTool({
                 message: `Добро пожаловать ${res.name}! Для поиска фильмов введите запрос в поле ввода`,
                 img: succed,
@@ -176,7 +206,7 @@ function App() {
           });
       })
       .catch((error) => {
-        setRegisterPopup(true);
+        setInfoPopup(true);
         setInfoTool({
           message: 'Что-то пошло не так! Введите правильно данные',
           img: fail,
@@ -240,23 +270,6 @@ function App() {
     }
   };
 
-  function cardLike(movie) {
-    // console.log(movie);
-    MainApi.changeLikeCardStatus(movie)
-      .then((newCard) => {
-        console.log(newCard);
-        // const newCards = cards.map((c) =>
-        //   c._id === card._id ? newCard.data : c
-        // );
-        // setCards(newCards);
-      })
-      .catch((res) => {
-        console.log(`Ошибка: ${res}`);
-      });
-
-    // setItemLike(iconLike);
-  }
-
   // function handleCardLike(card) {
   //   const isLiked = card.likes.some((i) => i === currentUser._id);
   //   api
@@ -271,8 +284,8 @@ function App() {
   // }
 
   function cardDelete(cardId) {
-    const newList = saveItems.filter((c) => c.id !== cardId);
-    return setSaveItems(newList);
+    const newList = saveMovie.filter((c) => c.id !== cardId);
+    return setSaveMovie(newList);
   }
 
   function getWindowDimensions() {
@@ -297,7 +310,7 @@ function App() {
   });
 
   function closeAllPopups() {
-    setRegisterPopup(false);
+    setInfoPopup(false);
   }
 
   const escFunction = (event) => {
@@ -329,7 +342,7 @@ function App() {
             cardLike={cardLike}
             itemLike={itemLike}
             movies={movies}
-            saveItems={saveItems}
+            saveMovie={saveMovie}
             onSearch={onSearch}
             cardDelete={cardDelete}
           />
@@ -343,7 +356,7 @@ function App() {
           cardLike={cardLike}
           itemLike={itemLike}
           movies={movies}
-          saveItems={saveItems}
+          saveMovie={saveMovie}
           onSearch={onSearch}
           cardDelete={cardDelete}
           /> */}
@@ -351,12 +364,12 @@ function App() {
           <Route path='/saved-movies'>
             <SavedMovies
               screen={screen}
-              saveItems={saveItems}
+              saveMovie={saveMovie}
               cardDelete={cardDelete}
             />
           </Route>
           <Route path='/profile'>
-            <Profile signOut={signOut} />
+            <Profile signOut={signOut} handleUpdateUser={handleUpdateUser} />
           </Route>
           <Route path='/signin'>
             <Login handleLogin={handleLogin} />
@@ -372,7 +385,7 @@ function App() {
           </Route>
         </Switch>
         <InfoTooltip
-          isOpen={registerPopup}
+          isOpen={infoPopup}
           onClose={closeAllPopups}
           infoTool={infoTool}
         />

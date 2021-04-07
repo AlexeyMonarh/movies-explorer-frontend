@@ -33,7 +33,7 @@ class MainApi {
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
-        about: data.about,
+        email: data.email,
       })
     }).then(thenMainApi)
   }
@@ -58,7 +58,7 @@ class MainApi {
   // }
 
   changeLikeCardStatus(movie) {
-    // console.log(movie);
+    console.log(movie);
     // if (isLiked) {
       return fetch(`${this._baseUrl}/movies`, {
         method: 'POST',
@@ -73,7 +73,7 @@ class MainApi {
           description: movie.description,
           image: `https://api.nomoreparties.co${movie.image.url}`,
           trailer: movie.trailerLink,
-          thumbnail: movie.trailerLink,
+          thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
           movieId: movie.id,
           nameRU: movie.nameRU,
           nameEN: movie.nameEN,
@@ -91,11 +91,11 @@ class MainApi {
 
 
 const api = new MainApi({
-  baseUrl: 'https://api.diploma-praktikum.students.nomoredomains.monster',
+  baseUrl: 'http://localhost:3001',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   }
 });
-
+// https://api.diploma-project-praktikum.ru
 export default api;

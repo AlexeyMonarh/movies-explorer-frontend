@@ -13,8 +13,8 @@ function SavedMovies(props) {
         screen={props.screen}
         cardLike={props.cardLike}
         itemLike={props.itemLike}
-        movies={props.saveItems}
-        // saveItems={props.saveItems}
+        movies={props.saveMovie}
+        // saveMovie={props.saveMovie}
         cardDelete={props.cardDelete}
       />
       <Footer />

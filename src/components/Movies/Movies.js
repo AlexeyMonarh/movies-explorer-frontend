@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 function Movies(props) {
   return (
     <div className='movies'>
-      <Header background='header_background' />
+      <Header background='header_background' loggedIn={props.loggedIn} />
       <SearchForm
         onSearch={props.onSearch}
         setOnCheckbox={props.setOnCheckbox}
@@ -21,7 +21,7 @@ function Movies(props) {
         cardLike={props.cardLike}
         itemLike={props.itemLike}
         movies={props.movies}
-        saveItems={props.saveItems}
+        saveMovie={props.saveMovie}
         cardDelete={props.cardDelete}
       />
       <Footer />
