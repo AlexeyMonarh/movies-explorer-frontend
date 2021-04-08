@@ -47,7 +47,7 @@ function App() {
   //   console.log(`Ошибка: ${res}`);
   // };
 
-  console.log(currentUser._id)
+  // console.log(currentUser._id)
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -65,18 +65,32 @@ function App() {
         .catch((res) => {
           console.log(`Ошибка: ${res}`);
         });
-      MainApi.getMovies().then((data) => {
-        // const arr = data;
-        // console.log(currentUser._id)
-        // data.forEach(element => {
-          // console.log(element.owner)
-          // if (element.owner === currentUser._id) {
-          //   console.log(element)
-          // }
-        // });
-        setSaveMovie(data);
-      });
     }
+  }, []);
+
+  useEffect(() => {
+    function initSavedMovies() {
+      MainApi.getMovies()
+        .then((data) => {
+          // console.log(data)
+          const arraySavedMovies = data.map((element) => {
+            if (element.owner === currentUser._id) {
+              return element;
+            }
+            return element;
+          });
+          const filterSavedMovies = arraySavedMovies.filter(
+            (movie) => movie.owner === currentUser._id
+          );
+          console.log(filterSavedMovies);
+          // saveMovie.push(filterSavedMovies)
+          setSaveMovie(filterSavedMovies);
+        })
+        .catch((res) => {
+          console.log(`Ошибка: ${res}`);
+        });
+    }
+   return initSavedMovies();
   }, []);
 
   useEffect(() => {
@@ -100,7 +114,7 @@ function App() {
         // console.log(newCard);
 
         // const newCards = newCard.map((arr) => arr);
-        setSaveMovie([newCard, ...saveMovie]);
+        setSaveMovie([...saveMovie, newCard]);
       })
       .catch((res) => {
         console.log(`Ошибка: ${res}`);
@@ -114,7 +128,6 @@ function App() {
     MainApi.setUserInfo(data)
       .then((res) => {
         setСurrentUser(res);
-        console.log(loggedIn);
         setInfoPopup(true);
         setInfoTool({
           message: 'Данные изменены!',
@@ -239,7 +252,7 @@ function App() {
 
   const onSearch = (text) => {
     if (location.pathname === '/saved-movies') {
-      setPreloader(true);
+      // setPreloader(true);
       console.log('Search Save');
     }
     if (location.pathname === '/movies') {
