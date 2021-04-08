@@ -21,7 +21,6 @@ function Movies(props) {
         cardLike={props.cardLike}
         itemLike={props.itemLike}
         movies={props.movies}
-        saveMovie={props.saveMovie}
         cardDelete={props.cardDelete}
       />
       <Footer />

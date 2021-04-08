@@ -3,7 +3,7 @@ const thenMainApi = (res) => {
     return res.json();
   }
   return Promise.reject(`Ошибка: ${res.status}`);
-}
+};
 
 class MainApi {
   constructor(options) {
@@ -11,20 +11,20 @@ class MainApi {
     this._headers = options.headers;
   }
 
-  setToken(token){
-    this._headers.Authorization = `Bearer ${token}` ;
+  setToken(token) {
+    this._headers.Authorization = `Bearer ${token}`;
   }
 
-  // getInitialCards() {
-  //   return fetch(this._baseUrl + '/cards', {
-  //     headers: this._headers
-  //   }).then(thenMainApi)
-  // }
+  getMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      headers: this._headers
+    }).then(thenMainApi)
+  }
 
   getUser() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
-    }).then(thenMainApi)
+      headers: this._headers,
+    }).then(thenMainApi);
   }
 
   setUserInfo(data) {
@@ -34,8 +34,8 @@ class MainApi {
       body: JSON.stringify({
         name: data.name,
         email: data.email,
-      })
-    }).then(thenMainApi)
+      }),
+    }).then(thenMainApi);
   }
 
   // setAvatar(avatar) {
@@ -60,12 +60,12 @@ class MainApi {
   changeLikeCardStatus(movie) {
     console.log(movie);
     // if (isLiked) {
-      return fetch(`${this._baseUrl}/movies`, {
-        method: 'POST',
-        headers: this._headers,
-        body: 
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      headers: this._headers,
+      body:
         // JSON.stringify(movie),
-         JSON.stringify({
+        JSON.stringify({
           country: movie.country,
           director: movie.director,
           duration: movie.duration,
@@ -77,8 +77,8 @@ class MainApi {
           movieId: movie.id,
           nameRU: movie.nameRU,
           nameEN: movie.nameEN,
-        })
-      }).then(thenMainApi)
+        }),
+    }).then(thenMainApi);
     // }
     //  else {
     //   return fetch(`${this._baseUrl}/movies/${movie.id}`, {
@@ -89,13 +89,13 @@ class MainApi {
   }
 }
 
-
 const api = new MainApi({
-  baseUrl: 'http://localhost:3001',
+  baseUrl: 'https://api.diploma-project-praktikum.ru',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
-  }
+  },
 });
 // https://api.diploma-project-praktikum.ru
+//http://localhost:3001
 export default api;

@@ -47,7 +47,7 @@ function App() {
   //   console.log(`Ошибка: ${res}`);
   // };
 
-  console.log(currentUser);
+  console.log(currentUser._id)
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -65,6 +65,17 @@ function App() {
         .catch((res) => {
           console.log(`Ошибка: ${res}`);
         });
+      MainApi.getMovies().then((data) => {
+        // const arr = data;
+        // console.log(currentUser._id)
+        // data.forEach(element => {
+          // console.log(element.owner)
+          // if (element.owner === currentUser._id) {
+          //   console.log(element)
+          // }
+        // });
+        setSaveMovie(data);
+      });
     }
   }, []);
 
@@ -80,14 +91,16 @@ function App() {
     }
   }, [loggedIn]);
 
+  // console.log(saveMovie);
+
   function cardLike(movie) {
     console.log(movie);
     MainApi.changeLikeCardStatus(movie)
       .then((newCard) => {
-        console.log(newCard);
+        // console.log(newCard);
 
         // const newCards = newCard.map((arr) => arr);
-        // setSaveMovie(newCard);
+        setSaveMovie([newCard, ...saveMovie]);
       })
       .catch((res) => {
         console.log(`Ошибка: ${res}`);
@@ -95,7 +108,7 @@ function App() {
 
     // setItemLike(iconLike);
   }
-  console.log(loggedIn);
+  // console.log(loggedIn);
   function handleUpdateUser(data) {
     // setSavePreload("Сохранение...");
     MainApi.setUserInfo(data)
@@ -138,7 +151,7 @@ function App() {
               auth
                 .getContent(token)
                 .then((res) => {
-                  console.log(res);
+                  // console.log(res);
                   if (res) {
                     setLoggedIn(true);
                     // setToken(true);
@@ -225,48 +238,54 @@ function App() {
   }
 
   const onSearch = (text) => {
-    setPreloader(true);
-    if (text) {
-      setRequestFailed(false);
-      setNotFound(false);
-      MoviesApi.getInitialMovies()
-        .then((arr) => {
-          const fuse = new Fuse(arr, {
-            keys: ['nameRU'],
-            includeScore: 0,
-            includeMatches: true,
-            findAllMatches: true,
-            threshold: 0.1,
-            location: 0,
-          });
-          const results = fuse.search(text.search);
-          if (onCheckbox === true) {
-            const newResults = results.filter((c) => c.item.duration <= 40);
-            const newResultsArr = newResults.map((result) => result.item);
+    if (location.pathname === '/saved-movies') {
+      setPreloader(true);
+      console.log('Search Save');
+    }
+    if (location.pathname === '/movies') {
+      setPreloader(true);
+      if (text) {
+        setRequestFailed(false);
+        setNotFound(false);
+        MoviesApi.getInitialMovies()
+          .then((arr) => {
+            const fuse = new Fuse(arr, {
+              keys: ['nameRU'],
+              includeScore: 0,
+              includeMatches: true,
+              findAllMatches: true,
+              threshold: 0.1,
+              location: 0,
+            });
+            const results = fuse.search(text.search);
+            if (onCheckbox === true) {
+              const newResults = results.filter((c) => c.item.duration <= 40);
+              const newResultsArr = newResults.map((result) => result.item);
+              setPreloader(false);
+              if (newResultsArr.length === 0) {
+                setNotFound(true);
+              } else {
+                setNotFound(false);
+              }
+              localStorage.setItem('movies', JSON.stringify(newResultsArr));
+              return setMovies(newResultsArr);
+            }
+            const resultsArray = results.map((result) => result.item);
             setPreloader(false);
-            if (newResultsArr.length === 0) {
+            if (resultsArray.length === 0) {
               setNotFound(true);
             } else {
               setNotFound(false);
             }
-            localStorage.setItem('movies', JSON.stringify(newResultsArr));
-            return setMovies(newResultsArr);
-          }
-          const resultsArray = results.map((result) => result.item);
-          setPreloader(false);
-          if (resultsArray.length === 0) {
-            setNotFound(true);
-          } else {
-            setNotFound(false);
-          }
-          localStorage.setItem('movies', JSON.stringify(resultsArray));
-          return setMovies(resultsArray);
-        })
-        .catch((err) => {
-          if (err) {
-            setRequestFailed(true);
-          }
-        });
+            localStorage.setItem('movies', JSON.stringify(resultsArray));
+            return setMovies(resultsArray);
+          })
+          .catch((err) => {
+            if (err) {
+              setRequestFailed(true);
+            }
+          });
+      }
     }
   };
 
@@ -342,7 +361,7 @@ function App() {
             cardLike={cardLike}
             itemLike={itemLike}
             movies={movies}
-            saveMovie={saveMovie}
+            // saveMovie={saveMovie}
             onSearch={onSearch}
             cardDelete={cardDelete}
           />
@@ -365,6 +384,9 @@ function App() {
             <SavedMovies
               screen={screen}
               saveMovie={saveMovie}
+              onSearch={onSearch}
+              setOnCheckbox={setOnCheckbox}
+              onCheckbox={onCheckbox}
               cardDelete={cardDelete}
             />
           </Route>

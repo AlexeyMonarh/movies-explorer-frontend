@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 // import iconDislike from '../../../images/svg/icon-dislike.svg';
-// import iconX from '../../../images/svg/icon-x.svg';
+import iconX from '../../../images/svg/icon-x.svg';
 
 function MoviesCardList(props) {
   const [addItems, setAddItems] = useState(false);
@@ -18,6 +18,9 @@ function MoviesCardList(props) {
     },
     addCards
   );
+
+  // console.log(props.movies)
+  // console.log(props.saveMovie);
 
   function addCards(state) {
     return { ...state };
@@ -122,13 +125,14 @@ function MoviesCardList(props) {
       <ul className='movies-card-list__ul'>
         <Switch>
           <Route path='/movies'>
-            {props.movies.slice(0, itemsList).map((data, id) => {
+            {props.movies.slice(0, itemsList).map((data, _id) => {
+              // console.log(props.movies)
               const imgNull = data.image
                 ? `https://api.nomoreparties.co${data.image.url}`
                 : console.log('Невалидный адрес картинки');
               return (
                 <MoviesCard
-                  key={id}
+                  key={_id}
                   data={data}
                   id={data.id}
                   img={imgNull}
@@ -141,16 +145,16 @@ function MoviesCardList(props) {
             })}
           </Route>
           <Route path='/saved-movies'>
-            {props.saveMovie.map((data, id) => {
-              // const imgNull =
-              // data.image
-              //   ? `https://api.nomoreparties.co${data.image.url}`
-              //   : console.log('Невалидный адрес картинки');
+            {props.movies.slice(0, itemsList).map((data, _id) => {
+              // const imgNull = data.image
+              // ? `https://api.nomoreparties.co${data.image.url}`
+              // : console.log('Невалидный адрес картинки');
               return (
                 <MoviesCard
-                  key={id}
-                  id={data.id}
-                  // img={data.image.url}
+                  key={_id}
+                  data={data}
+                  id={data.movieId}
+                  img={data.image}
                   description={data.nameRU}
                   duration={data.duration}
                   buttonLikeClick={props.cardDelete}

@@ -8,13 +8,16 @@ function SavedMovies(props) {
   return (
     <div className='saved-movies'>
       <Header background='header_background' />
-      <SearchForm />
+      <SearchForm
+        onSearch={props.onSearch}
+        setOnCheckbox={props.setOnCheckbox}
+        onCheckbox={props.onCheckbox}
+      />
       <MoviesCardList
         screen={props.screen}
         cardLike={props.cardLike}
         itemLike={props.itemLike}
         movies={props.saveMovie}
-        // saveMovie={props.saveMovie}
         cardDelete={props.cardDelete}
       />
       <Footer />
