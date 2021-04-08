@@ -48,6 +48,27 @@ function App() {
   // };
 
   // console.log(currentUser._id)
+  useEffect(() => {
+    function initSavedMovies() {
+      if (loggedIn) {
+        MainApi.getMovies()
+          .then((data) => {
+            const filterSavedMovies = data.filter(
+              (movie) => movie.owner === currentUser._id
+            );
+            localStorage.setItem(
+              'saved-movies',
+              JSON.stringify(filterSavedMovies)
+            );
+            return setSaveMovie([...saveMovie, filterSavedMovies]);
+          })
+          .catch((res) => {
+            console.log(`Ошибка: ${res}`);
+          });
+      }
+    }
+    initSavedMovies();
+  }, [setSaveMovie]);
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -56,7 +77,6 @@ function App() {
       auth
         .getContent(token)
         .then((res) => {
-          // console.log(res)
           if (res) {
             setLoggedIn(true);
             setСurrentUser(res);
@@ -69,31 +89,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    function initSavedMovies() {
-      MainApi.getMovies()
-        .then((data) => {
-          // console.log(data)
-          const arraySavedMovies = data.map((element) => {
-            if (element.owner === currentUser._id) {
-              return element;
-            }
-            return element;
-          });
-          const filterSavedMovies = arraySavedMovies.filter(
-            (movie) => movie.owner === currentUser._id
-          );
-          console.log(filterSavedMovies);
-          // saveMovie.push(filterSavedMovies)
-          setSaveMovie(filterSavedMovies);
-        })
-        .catch((res) => {
-          console.log(`Ошибка: ${res}`);
-        });
-    }
-   return initSavedMovies();
-  }, []);
-
-  useEffect(() => {
     if (loggedIn) {
       // setLoggedIn(true)
       history.push('/movies');
@@ -101,9 +96,25 @@ function App() {
         .then((res) => {
           setСurrentUser(res);
         })
-        .catch();
+        .catch((res) => {
+          console.log(`Ошибка: ${res}`);
+        });
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    const moviesStorage = localStorage.getItem('movies');
+    if (moviesStorage) {
+      return setMovies(JSON.parse(moviesStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    const moviesSavedStorage = localStorage.getItem('saved-movies');
+    if (moviesSavedStorage) {
+      return setSaveMovie(JSON.parse(moviesSavedStorage));
+    }
+  }, []);
 
   // console.log(saveMovie);
 
@@ -122,9 +133,8 @@ function App() {
 
     // setItemLike(iconLike);
   }
-  // console.log(loggedIn);
+
   function handleUpdateUser(data) {
-    // setSavePreload("Сохранение...");
     MainApi.setUserInfo(data)
       .then((res) => {
         setСurrentUser(res);
@@ -133,22 +143,15 @@ function App() {
           message: 'Данные изменены!',
           img: succed,
         });
-        // closeAllPopups();
       })
       .catch((err) => console.log(err));
-    // .finally(() => {
-    //   // setSavePreload("Сохранить");
-    //   closeAllPopups();
-    // });
   }
 
   function handleRegister(data) {
-    // console.log(data);
     const { name, email, password } = data;
     auth
       .register(name, email, password)
       .then((res) => {
-        // console.log(res)
         if (res) {
           history.push('/movies');
           auth
@@ -164,7 +167,6 @@ function App() {
               auth
                 .getContent(token)
                 .then((res) => {
-                  // console.log(res);
                   if (res) {
                     setLoggedIn(true);
                     // setToken(true);
@@ -198,12 +200,9 @@ function App() {
   }
 
   function handleLogin(data) {
-    // console.log(data);
-    // const { email, password } = data;
     auth
       .authorize(data.email, data.password)
       .then((res) => {
-        // console.log(res);
         if (res.token) {
           localStorage.setItem('jwt', res.token);
           MainApi.setToken(res.token);
@@ -214,7 +213,6 @@ function App() {
         auth
           .getContent(token)
           .then((res) => {
-            // console.log(res);
             if (res) {
               setLoggedIn(true);
               // setToken(true);
@@ -244,8 +242,10 @@ function App() {
   function signOut() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('movies');
+    localStorage.removeItem('saved-movies');
     setСurrentUser('');
     setMovies([]);
+    setSaveMovie([]);
     setLoggedIn(false);
     history.push('/');
   }
@@ -326,13 +326,6 @@ function App() {
   window.addEventListener('resize', () => {
     setTimeout(getWindowDimensions, 1000);
   });
-
-  useEffect(() => {
-    const moviesStorage = localStorage.getItem('movies');
-    if (moviesStorage) {
-      return setMovies(JSON.parse(moviesStorage));
-    }
-  }, []);
 
   useEffect(() => {
     document.addEventListener('keydown', escFunction, false);

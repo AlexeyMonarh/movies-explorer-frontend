@@ -91,6 +91,15 @@ function MoviesCardList(props) {
           },
         });
       }
+      if (location.pathname === '/saved-movies') {
+        dispatch({
+          type: 'resize',
+          payload: {
+            initialCardsState: { arrayCardsList: props.movies.length },
+            addCardResize: { arrayCardsList: 0 },
+          },
+        });
+      }
     }
     return () => {
       isMounted = true;
@@ -129,7 +138,7 @@ function MoviesCardList(props) {
               // console.log(props.movies)
               const imgNull = data.image
                 ? `https://api.nomoreparties.co${data.image.url}`
-                : console.log('Невалидный адрес картинки');
+                : 'https://via.placeholder.com/360x200/778899/FFFFFF?text=Нет изображения'
               return (
                 <MoviesCard
                   key={_id}
@@ -145,7 +154,7 @@ function MoviesCardList(props) {
             })}
           </Route>
           <Route path='/saved-movies'>
-            {props.movies.slice(0, itemsList).map((data, _id) => {
+            {props.movies.map((data, _id) => {
               // const imgNull = data.image
               // ? `https://api.nomoreparties.co${data.image.url}`
               // : console.log('Невалидный адрес картинки');

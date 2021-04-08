@@ -17,8 +17,8 @@ class MainApi {
 
   getMovies() {
     return fetch(`${this._baseUrl}/movies`, {
-      headers: this._headers
-    }).then(thenMainApi)
+      headers: this._headers,
+    }).then(thenMainApi);
   }
 
   getUser() {
@@ -71,9 +71,13 @@ class MainApi {
           duration: movie.duration,
           year: movie.year,
           description: movie.description,
-          image: `https://api.nomoreparties.co${movie.image.url}`,
+          image: movie.image
+            ? `https://api.nomoreparties.co${movie.image.url}`
+            : 'https://www.youtube.com',
           trailer: movie.trailerLink,
-          thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+          thumbnail: movie.image
+            ? `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`
+            : 'https://www.youtube.com',
           movieId: movie.id,
           nameRU: movie.nameRU,
           nameEN: movie.nameEN,
