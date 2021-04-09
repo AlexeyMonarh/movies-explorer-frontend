@@ -7,7 +7,7 @@ function MoviesCard(props) {
       return compareId;
     }
   }
-  const initLike = `${
+  const initLike = ` ${
     compareId()
       ? 'movies-card__description-button_like'
       : 'movies-card__description-button_dislike'
