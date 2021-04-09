@@ -33,7 +33,7 @@ function App() {
   const [saveMovie, setSaveMovie] = useState([]);
   const [preloader, setPreloader] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  const [itemLike, setItemLike] = useState(iconDislike);
+  // const [itemLike, setItemLike] = useState(false);
   const [requestFailed, setRequestFailed] = useState(false);
   const [onCheckbox, setOnCheckbox] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -43,32 +43,15 @@ function App() {
     img: '',
   });
   const [infoPopup, setInfoPopup] = useState();
+  const filterButtonImg = saveMovie
+    .map((res) => res.owner)
+    .some((res) => res === currentUser._id);
+
+  console.log(filterButtonImg)
+
   // const err = (res) => {
   //   console.log(`Ошибка: ${res}`);
   // };
-
-  // console.log(currentUser._id)
-  useEffect(() => {
-    function initSavedMovies() {
-      if (loggedIn) {
-        MainApi.getMovies()
-          .then((data) => {
-            const filterSavedMovies = data.filter(
-              (movie) => movie.owner === currentUser._id
-            );
-            localStorage.setItem(
-              'saved-movies',
-              JSON.stringify(filterSavedMovies)
-            );
-            return setSaveMovie([...saveMovie, filterSavedMovies]);
-          })
-          .catch((res) => {
-            console.log(`Ошибка: ${res}`);
-          });
-      }
-    }
-    initSavedMovies();
-  }, [setSaveMovie]);
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
@@ -105,33 +88,74 @@ function App() {
   useEffect(() => {
     const moviesStorage = localStorage.getItem('movies');
     if (moviesStorage) {
-      return setMovies(JSON.parse(moviesStorage));
+      setMovies(JSON.parse(moviesStorage));
     }
   }, []);
+  // function handleCardLike(card) {
+  //   const isLiked = card.likes.some((i) => i === currentUser._id);
+  //   api
+  //     .changeLikeCardStatus(card._id, !isLiked)
+  //     .then((newCard) => {
+  //       const newCards = cards.map((c) =>
+  //         c._id === card._id ? newCard.data : c
+  //       );
+  //       setCards(newCards);
+  //     })
+  //     .catch(err);
+  // }
 
   useEffect(() => {
     const moviesSavedStorage = localStorage.getItem('saved-movies');
-    if (moviesSavedStorage) {
-      return setSaveMovie(JSON.parse(moviesSavedStorage));
-    }
+    // const arrayMovies = JSON.parse(moviesSavedStorage);
+
+    // console.log(movies);
+    // if (filterButtonImg) {
+    //   setItemLike(true);
+    // }
+    // if (filterButtonImg) {
+    //   setItemLike(false);
+    // }
+    console.log(filterButtonImg);
+    setSaveMovie(JSON.parse(moviesSavedStorage));
   }, []);
 
-  // console.log(saveMovie);
-
   function cardLike(movie) {
-    console.log(movie);
-    MainApi.changeLikeCardStatus(movie)
-      .then((newCard) => {
-        // console.log(newCard);
-
-        // const newCards = newCard.map((arr) => arr);
-        setSaveMovie([...saveMovie, newCard]);
-      })
-      .catch((res) => {
-        console.log(`Ошибка: ${res}`);
+    const filterMovies = saveMovie
+      .map((res) => res.movieId)
+      .some((res) => res === movie.id);
+    if (filterMovies) {
+      setInfoPopup(true);
+      setInfoTool({
+        message: 'Такой фильм есть в вашей коллекции!',
+        img: succed,
       });
+    } else {
+      MainApi.changeLikeCardStatus(movie)
+        .then((newCard) => {
+          if (newCard) {
+            setSaveMovie([...saveMovie, newCard]);
+            localStorage.setItem(
+              'saved-movies',
+              JSON.stringify([...saveMovie, newCard])
+            );
+          }
+        })
+        .catch((res) => {
+          console.log(`Ошибка: ${res}`);
+        });
+      localStorage.setItem('saved-movies', JSON.stringify(saveMovie));
+      // setItemLike(iconLike);
+    }
+  }
 
-    // setItemLike(iconLike);
+  function cardDelete(card) {
+    console.log(card);
+    MainApi.cardDelete(card).catch((res) => {
+      console.log(`Ошибка: ${res}`);
+    });
+    const newList = saveMovie.filter((c) => c._id !== card._id);
+    localStorage.setItem('saved-movies', JSON.stringify(newList));
+    return setSaveMovie(newList);
   }
 
   function handleUpdateUser(data) {
@@ -183,7 +207,8 @@ function App() {
             });
           setInfoPopup(true);
           setInfoTool({
-            message: 'Вы успешно зарегистрировались!',
+            message:
+              'Вы успешно зарегистрировались! Для поиска фильмов введите запрос в поле ввода',
             img: succed,
           });
         }
@@ -192,7 +217,7 @@ function App() {
         setInfoPopup(true);
         setInfoTool({
           message:
-            'Что-то пошло не так! Такой пользователь уже зарегистрирован.',
+            'Что-то пошло не так! Такой пользователь уже зарегистрирован',
           img: fail,
         });
         console.log(`Такой email существует в базе данных ${err}`);
@@ -217,6 +242,20 @@ function App() {
               setLoggedIn(true);
               // setToken(true);
               setСurrentUser(res);
+              MainApi.getMovies()
+                .then((data) => {
+                  const filterSavedMovies = data.filter(
+                    (movie) => movie.owner === res._id
+                  );
+                  localStorage.setItem(
+                    'saved-movies',
+                    JSON.stringify(filterSavedMovies)
+                  );
+                  setSaveMovie(filterSavedMovies);
+                })
+                .catch((res) => {
+                  console.log(`Ошибка: ${res}`);
+                });
               history.push('/movies');
               setInfoPopup(true);
               setInfoTool({
@@ -302,24 +341,6 @@ function App() {
     }
   };
 
-  // function handleCardLike(card) {
-  //   const isLiked = card.likes.some((i) => i === currentUser._id);
-  //   api
-  //     .changeLikeCardStatus(card._id, !isLiked)
-  //     .then((newCard) => {
-  //       const newCards = cards.map((c) =>
-  //         c._id === card._id ? newCard.data : c
-  //       );
-  //       setCards(newCards);
-  //     })
-  //     .catch(err);
-  // }
-
-  function cardDelete(cardId) {
-    const newList = saveMovie.filter((c) => c.id !== cardId);
-    return setSaveMovie(newList);
-  }
-
   function getWindowDimensions() {
     setScreen(window.innerWidth);
   }
@@ -365,11 +386,11 @@ function App() {
             requestFailed={requestFailed}
             screen={screen}
             cardLike={cardLike}
-            itemLike={itemLike}
+            itemLike={filterButtonImg}
             movies={movies}
             // saveMovie={saveMovie}
             onSearch={onSearch}
-            cardDelete={cardDelete}
+            // cardDelete={cardDelete}
           />
           {/* <Movies
           setOnCheckbox={setOnCheckbox}

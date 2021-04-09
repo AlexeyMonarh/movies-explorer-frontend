@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
-// import { items, itemsSave } from '../../../utils/api/movies';
+// import iconLike from '../../../images/svg/icon-like.svg';
+// import iconDislike from '../../../images/svg/icon-dislike.svg';
 import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
-// import iconDislike from '../../../images/svg/icon-dislike.svg';
 import iconX from '../../../images/svg/icon-x.svg';
 
 function MoviesCardList(props) {
@@ -18,9 +18,6 @@ function MoviesCardList(props) {
     },
     addCards
   );
-
-  // console.log(props.movies)
-  // console.log(props.saveMovie);
 
   function addCards(state) {
     return { ...state };
@@ -135,10 +132,9 @@ function MoviesCardList(props) {
         <Switch>
           <Route path='/movies'>
             {props.movies.slice(0, itemsList).map((data, _id) => {
-              // console.log(props.movies)
               const imgNull = data.image
                 ? `https://api.nomoreparties.co${data.image.url}`
-                : 'https://via.placeholder.com/360x200/778899/FFFFFF?text=Нет изображения'
+                : 'https://via.placeholder.com/360x200/778899/FFFFFF?text=NO IMAGE';
               return (
                 <MoviesCard
                   key={_id}
@@ -148,16 +144,13 @@ function MoviesCardList(props) {
                   description={data.nameRU}
                   duration={data.duration}
                   buttonLikeClick={props.cardLike}
-                  buttonImg={props.itemLike}
+                  itemLike={props.itemLike}
                 />
               );
             })}
           </Route>
           <Route path='/saved-movies'>
             {props.movies.map((data, _id) => {
-              // const imgNull = data.image
-              // ? `https://api.nomoreparties.co${data.image.url}`
-              // : console.log('Невалидный адрес картинки');
               return (
                 <MoviesCard
                   key={_id}

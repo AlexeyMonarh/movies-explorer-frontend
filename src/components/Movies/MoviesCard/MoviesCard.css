@@ -43,9 +43,24 @@
   outline: none;
 }
 
+.movies-card__description-button_dislike {
+  background-image: url('../../../images/svg/icon-dislike.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.movies-card__description-button_like {
+  background-image: url('../../../images/svg/icon-like.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .movies-card__description-button_none {
   opacity: 0;
   transition: 0.5s;
+  background-image: url('../../../images/svg/icon-x.svg');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .movies-card__description-button_none:hover {
