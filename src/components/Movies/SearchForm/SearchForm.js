@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import iconSearch from '../../../images/svg/icon-search.svg';
 import validationSchema from '../../../utils/FormValidator/FormValidatorSearchMovies';
 import { Formik } from 'formik';

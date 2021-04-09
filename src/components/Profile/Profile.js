@@ -7,7 +7,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  // console.log(currentUser);
   return (
     <div className='profile'>
       <Header background='header_background' />
@@ -22,7 +21,6 @@ function Profile(props) {
           validateOnBlur
           onSubmit={(values) => {
             props.handleUpdateUser(values)
-            // console.log(values);
           }}
           validationSchema={validationSchema}>
           {({

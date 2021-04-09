@@ -19,8 +19,6 @@ import MainApi from '../../utils/api/MainApi';
 import MoviesApi from '../../utils/api/MoviesApi';
 import succed from '../../images/svg/succed.svg';
 import fail from '../../images/svg/fail.svg';
-import iconLike from '../../images/svg/icon-like.svg';
-import iconDislike from '../../images/svg/icon-dislike.svg';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import * as auth from '../../utils/authorization';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -33,30 +31,23 @@ function App() {
   const [saveMovie, setSaveMovie] = useState([]);
   const [preloader, setPreloader] = useState(false);
   const [notFound, setNotFound] = useState(false);
-  // const [itemLike, setItemLike] = useState(false);
   const [requestFailed, setRequestFailed] = useState(false);
   const [onCheckbox, setOnCheckbox] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [token, setToken] = useState(false);
   const [infoTool, setInfoTool] = useState({
     message: '',
     img: '',
   });
   const [infoPopup, setInfoPopup] = useState();
-  const filterButtonImg = saveMovie
-    .map((res) => res.owner)
-    .some((res) => res === currentUser._id);
 
-  console.log(filterButtonImg)
-
-  // const err = (res) => {
-  //   console.log(`Ошибка: ${res}`);
-  // };
+  function filterButtonImg(params) {
+    const filterButtonImg = saveMovie.map((res) => res.movieId);
+    return filterButtonImg;
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      // history.push('/movies');
       auth
         .getContent(token)
         .then((res) => {
@@ -73,7 +64,6 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      // setLoggedIn(true)
       history.push('/movies');
       MainApi.getUser()
         .then((res) => {
@@ -91,31 +81,9 @@ function App() {
       setMovies(JSON.parse(moviesStorage));
     }
   }, []);
-  // function handleCardLike(card) {
-  //   const isLiked = card.likes.some((i) => i === currentUser._id);
-  //   api
-  //     .changeLikeCardStatus(card._id, !isLiked)
-  //     .then((newCard) => {
-  //       const newCards = cards.map((c) =>
-  //         c._id === card._id ? newCard.data : c
-  //       );
-  //       setCards(newCards);
-  //     })
-  //     .catch(err);
-  // }
 
   useEffect(() => {
     const moviesSavedStorage = localStorage.getItem('saved-movies');
-    // const arrayMovies = JSON.parse(moviesSavedStorage);
-
-    // console.log(movies);
-    // if (filterButtonImg) {
-    //   setItemLike(true);
-    // }
-    // if (filterButtonImg) {
-    //   setItemLike(false);
-    // }
-    console.log(filterButtonImg);
     setSaveMovie(JSON.parse(moviesSavedStorage));
   }, []);
 
@@ -124,11 +92,8 @@ function App() {
       .map((res) => res.movieId)
       .some((res) => res === movie.id);
     if (filterMovies) {
-      setInfoPopup(true);
-      setInfoTool({
-        message: 'Такой фильм есть в вашей коллекции!',
-        img: succed,
-      });
+      const returnId = saveMovie.find((i) => i.movieId === movie.id);
+      cardDelete(returnId);
     } else {
       MainApi.changeLikeCardStatus(movie)
         .then((newCard) => {
@@ -144,12 +109,10 @@ function App() {
           console.log(`Ошибка: ${res}`);
         });
       localStorage.setItem('saved-movies', JSON.stringify(saveMovie));
-      // setItemLike(iconLike);
     }
   }
 
   function cardDelete(card) {
-    console.log(card);
     MainApi.cardDelete(card).catch((res) => {
       console.log(`Ошибка: ${res}`);
     });
@@ -193,7 +156,6 @@ function App() {
                 .then((res) => {
                   if (res) {
                     setLoggedIn(true);
-                    // setToken(true);
                     setСurrentUser(res);
                     history.push('/movies');
                   }
@@ -240,7 +202,6 @@ function App() {
           .then((res) => {
             if (res) {
               setLoggedIn(true);
-              // setToken(true);
               setСurrentUser(res);
               MainApi.getMovies()
                 .then((data) => {
@@ -372,13 +333,11 @@ function App() {
           <Route exact path='/'>
             <Main />
           </Route>
-          {/* <Route > */}
           <ProtectedRoute
             exact
             path='/movies'
             component={Movies}
             loggedIn={loggedIn}
-            // token={token}
             setOnCheckbox={setOnCheckbox}
             onCheckbox={onCheckbox}
             initPreloader={preloader}
@@ -388,25 +347,8 @@ function App() {
             cardLike={cardLike}
             itemLike={filterButtonImg}
             movies={movies}
-            // saveMovie={saveMovie}
             onSearch={onSearch}
-            // cardDelete={cardDelete}
           />
-          {/* <Movies
-          setOnCheckbox={setOnCheckbox}
-          onCheckbox={onCheckbox}
-          initPreloader={preloader}
-          notFound={notFound}
-          requestFailed={requestFailed}
-          screen={screen}
-          cardLike={cardLike}
-          itemLike={itemLike}
-          movies={movies}
-          saveMovie={saveMovie}
-          onSearch={onSearch}
-          cardDelete={cardDelete}
-          /> */}
-          {/* </Route> */}
           <Route path='/saved-movies'>
             <SavedMovies
               screen={screen}

@@ -1,13 +1,18 @@
 import React from 'react';
 
 function MoviesCard(props) {
-  const initLike = `movies-card__description-button link_hover ${
-    props.displayNone
-  } ${
-    props.itemLike
+  function compareId() {
+    if (location.pathname === '/movies') {
+      const compareId = props.itemLike().some((res) => res === props.data.id);
+      return compareId;
+    }
+  }
+  const initLike = `${
+    compareId()
       ? 'movies-card__description-button_like'
       : 'movies-card__description-button_dislike'
   }`;
+
   function cardSave() {
     props.buttonLikeClick(props.data);
   }
@@ -33,9 +38,10 @@ function MoviesCard(props) {
       </a>
       <div className='movies-card__description'>
         <h2 className='movies-card__description-title'>{props.description}</h2>
-        <button type='submit' className={initLike} onClick={cardSave}>
-          {/* <img src={props.buttonImg} alt='Изображение кнопки' /> */}
-        </button>
+        <button
+          type='submit'
+          className={`movies-card__description-button link_hover ${props.displayNone}${initLike}`}
+          onClick={cardSave}></button>
       </div>
       <div className='movies-card__description-time'>
         {getTimeFromMins(props.duration)}

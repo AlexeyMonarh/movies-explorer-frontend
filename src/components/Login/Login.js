@@ -17,7 +17,6 @@ function Login(props) {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          // console.log(values);
           props.handleLogin(values)
         }}
         validationSchema={validationSchema}>

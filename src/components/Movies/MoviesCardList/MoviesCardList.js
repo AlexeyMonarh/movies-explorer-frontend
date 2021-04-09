@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Switch } from 'react-router-dom';
-// import iconLike from '../../../images/svg/icon-like.svg';
-// import iconDislike from '../../../images/svg/icon-dislike.svg';
 import Preloader from '../Preloader/Preloader';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import iconX from '../../../images/svg/icon-x.svg';
