@@ -17,7 +17,7 @@ function Login(props) {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          props.handleLogin(values)
+          props.handleLogin(values);
         }}
         validationSchema={validationSchema}>
         {({
@@ -78,7 +78,11 @@ function Login(props) {
             <div className='identification__buttons'>
               <button
                 type='submit'
-                className='identification__button'
+                className={
+                  !isValid || !dirty
+                    ? 'identification__button button_disabled'
+                    : 'identification__button link_hover'
+                }
                 disabled={!isValid && !dirty}
                 onClick={handleSubmit}>
                 Войти

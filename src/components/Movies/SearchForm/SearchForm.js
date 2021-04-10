@@ -16,7 +16,11 @@ function SearchForm(props) {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          props.onSearch(values);
+          if(values){
+            props.onSearch(values);
+          } else {
+            console.log('Введите запрос в поле ввода!')
+          }
         }}
         validationSchema={validationSchema}>
         {({
@@ -47,7 +51,11 @@ function SearchForm(props) {
             </div>
             <button
               type='submit'
-              className='search-form__search-button link_hover'
+              className={
+                !isValid || !dirty
+                  ? 'search-form__search-button button_disabled'
+                  : 'search-form__search-button link_hover'
+              }
               disabled={!isValid && !dirty}
               onClick={handleSubmit}>
               <img src={iconSearch} alt='Иконка поиска' />

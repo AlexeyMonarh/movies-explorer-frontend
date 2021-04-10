@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Route,
   Switch,
@@ -31,16 +31,19 @@ function App() {
   const [saveMovie, setSaveMovie] = useState([]);
   const [preloader, setPreloader] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [notFoundSaved, setNotFoundSaved] = useState(false);
   const [requestFailed, setRequestFailed] = useState(false);
   const [onCheckbox, setOnCheckbox] = useState(false);
+  const [onCheckboxSavedMovies, setOnCheckboxSavedMovies] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [firstSearch, setFirstSearch] = useState(false);
   const [infoTool, setInfoTool] = useState({
     message: '',
     img: '',
   });
   const [infoPopup, setInfoPopup] = useState();
 
-  function filterButtonImg(params) {
+  function filterButtonImg() {
     const filterButtonImg = saveMovie.map((res) => res.movieId);
     return filterButtonImg;
   }
@@ -76,16 +79,30 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    const moviesStorage = localStorage.getItem('movies');
-    if (moviesStorage) {
-      setMovies(JSON.parse(moviesStorage));
+    const moviesSavedStorage = localStorage.getItem('saved-movies');
+    setSaveMovie(JSON.parse(moviesSavedStorage));
+  }, []);
+
+  useEffect(() => {
+    const firstSearch = localStorage.getItem('firstSearch');
+    if (firstSearch) {
+      setFirstSearch(JSON.parse(firstSearch));
     }
   }, []);
 
   useEffect(() => {
-    const moviesSavedStorage = localStorage.getItem('saved-movies');
-    setSaveMovie(JSON.parse(moviesSavedStorage));
+    const moviesSearcStorage = localStorage.getItem('movies-search');
+    if (moviesSearcStorage) {
+      setMovies(JSON.parse(moviesSearcStorage));
+    }
   }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', escFunction, false);
+    return () => {
+      document.removeEventListener('keydown', escFunction, false);
+    };
+  });
 
   function cardLike(movie) {
     const filterMovies = saveMovie
@@ -243,61 +260,192 @@ function App() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('movies');
     localStorage.removeItem('saved-movies');
+    localStorage.removeItem('firstSearch');
+    localStorage.removeItem('movies-search');
     setСurrentUser('');
     setMovies([]);
     setSaveMovie([]);
     setLoggedIn(false);
+    setFirstSearch(false);
     history.push('/');
+  }
+
+  function fuseSearch(text, params) {
+    setPreloader(true);
+    console.log(params)
+    // if (text || params) {
+    const fuse = new Fuse(params, {
+      keys: ['nameRU'],
+      includeScore: 0,
+      includeMatches: true,
+      findAllMatches: true,
+      threshold: 0.1,
+      location: 0,
+    });
+    const results = fuse.search(text.search);
+
+    if (onCheckbox === true) {
+      const newResults = results.filter((c) => c.item.duration <= 40);
+      const newResultsArr = newResults.map((result) => result.item);
+      if (newResultsArr.length === 0) {
+        setNotFoundSaved(true);
+      } else {
+        setNotFoundSaved(false);
+      }
+      setPreloader(false);
+      localStorage.setItem('movies-search', JSON.stringify(newResultsArr));
+      return setMovies(newResultsArr);
+    }
+
+    if (onCheckboxSavedMovies === true) {
+      const newResults = results.filter((c) => c.item.duration <= 40);
+      const newResultsArr = newResults.map((result) => result.item);
+      if (newResultsArr.length === 0) {
+        setNotFoundSaved(true);
+      } else {
+        setNotFoundSaved(false);
+      }
+      setPreloader(false);
+      return setSaveMovie(newResultsArr);
+    }
+    const resultsArray = results.map((result) => result.item);
+    // console.log(resultsArray);
+    if (resultsArray.length === 0) {
+      setNotFound(true);
+    } else {
+      setNotFound(false);
+    }
+
+    if (firstSearch === false) {
+      localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+      setPreloader(false);
+      return setMovies(resultsArray);
+    }
+
+    if (location.pathname === '/movies') {
+      localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+      setPreloader(false);
+      return setMovies(resultsArray);
+    }
+
+    if (location.pathname === '/saved-movies') {
+      localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+      setPreloader(false);
+      return setSaveMovie(resultsArray);
+    }
+    // if (results.length === 0) {
+    //   setNotFound(true);
+    // } else {
+    //   setNotFound(false);
+    // }
+
+    setPreloader(false);
+    // return results;
+    // } else {
+    //   console.log('Ничего не найдено!');
+    // }
   }
 
   const onSearch = (text) => {
     if (location.pathname === '/saved-movies') {
-      // setPreloader(true);
-      console.log('Search Save');
-    }
-    if (location.pathname === '/movies') {
-      setPreloader(true);
       if (text) {
         setRequestFailed(false);
         setNotFound(false);
-        MoviesApi.getInitialMovies()
-          .then((arr) => {
-            const fuse = new Fuse(arr, {
-              keys: ['nameRU'],
-              includeScore: 0,
-              includeMatches: true,
-              findAllMatches: true,
-              threshold: 0.1,
-              location: 0,
-            });
-            const results = fuse.search(text.search);
-            if (onCheckbox === true) {
-              const newResults = results.filter((c) => c.item.duration <= 40);
-              const newResultsArr = newResults.map((result) => result.item);
-              setPreloader(false);
-              if (newResultsArr.length === 0) {
-                setNotFound(true);
-              } else {
-                setNotFound(false);
+        const moviesSavedStorage = localStorage.getItem('saved-movies');
+        const arrSavedMovies = JSON.parse(moviesSavedStorage);
+        fuseSearch(text, arrSavedMovies);
+
+        // console.log(savedMoviesArrSearch)
+        // if (onCheckboxSavedMovies === true) {
+        //   const newResults = savedMoviesArrSearch.filter(
+        //     (c) => c.item.duration <= 40
+        //   );
+        //   const newResultsArr = newResults.map((result) => result.item);
+        //   // if (newResultsArr.length === 0) {
+        //   //   setNotFoundSaved(true);
+        //   // } else {
+        //   //   setNotFoundSaved(false);
+        //   // }
+        //   return setSaveMovie(newResultsArr);
+        // }
+        // const resultsArray = savedMoviesArrSearch.map((result) => result.item);
+        // if (resultsArray.length === 0) {
+        //   setNotFoundSaved(true);
+        // } else {
+        //   setNotFoundSaved(false);
+        // }
+        // return setSaveMovie(resultsArray);
+      }
+    }
+    if (location.pathname === '/movies') {
+      if (text) {
+        // setPreloader(true);
+        setRequestFailed(false);
+        setNotFound(false);
+        if (firstSearch === false) {
+          setRequestFailed(false);
+          setNotFound(false);
+          localStorage.setItem('firstSearch', JSON.stringify(true));
+          setFirstSearch(true);
+          MoviesApi.getInitialMovies()
+            .then((arr) => {
+              if (arr) {
+                const resultsArray = arr.map((result) => result);
+                localStorage.setItem('movies', JSON.stringify(resultsArray));
+                // console.log(resultsArray);
+                // fuseSearch(text, resultsArray);
+                // setPreloader(false);
               }
-              localStorage.setItem('movies', JSON.stringify(newResultsArr));
-              return setMovies(newResultsArr);
-            }
-            const resultsArray = results.map((result) => result.item);
-            setPreloader(false);
-            if (resultsArray.length === 0) {
-              setNotFound(true);
-            } else {
-              setNotFound(false);
-            }
-            localStorage.setItem('movies', JSON.stringify(resultsArray));
-            return setMovies(resultsArray);
-          })
-          .catch((err) => {
-            if (err) {
-              setRequestFailed(true);
-            }
-          });
+
+              // const resultsArray = firstArrSearch.map((result) => result.item);
+              // setPreloader(false);
+
+              // if (resultsArray.length === 0) {
+              //   setNotFound(true);
+              // } else {
+              //   setNotFound(false);
+              // }
+              // localStorage.setItem(
+              //   'movies-search',
+              //   JSON.stringify(resultsArray)
+              // );
+
+              // return setMovies(resultsArray);
+            })
+            .catch((err) => {
+              if (err) {
+                setRequestFailed(true);
+              }
+            });
+        }
+        const moviesArrayStorage = localStorage.getItem('movies-search');
+        const arrMovies = JSON.parse(moviesArrayStorage);
+        fuseSearch(text, arrMovies);
+        // console.log(moviesArrSearch)
+        // if (onCheckbox === true) {
+        //   const newResults = moviesArrSearch.filter(
+        //     (c) => c.item.duration <= 40
+        //   );
+        //   const newResultsArr = newResults.map((result) => result.item);
+        //   // setPreloader(false);
+        //   if (newResultsArr.length === 0) {
+        //     setNotFound(true);
+        //   } else {
+        //     setNotFound(false);
+        //   }
+        //   localStorage.setItem('movies-search', JSON.stringify(newResultsArr));
+        //   return setMovies(newResultsArr);
+        // }
+        // const resultsArray = moviesArrSearch.map((result) => result.item);
+        // setPreloader(false);
+        // if (resultsArray.length === 0) {
+        //   setNotFound(true);
+        // } else {
+        //   setNotFound(false);
+        // }
+        // localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+        // // setPreloader(false);
+        // return setMovies(resultsArray);
       }
     }
   };
@@ -307,13 +455,6 @@ function App() {
   }
   window.addEventListener('resize', () => {
     setTimeout(getWindowDimensions, 1000);
-  });
-
-  useEffect(() => {
-    document.addEventListener('keydown', escFunction, false);
-    return () => {
-      document.removeEventListener('keydown', escFunction, false);
-    };
   });
 
   function closeAllPopups() {
@@ -353,10 +494,11 @@ function App() {
             component={SavedMovies}
             loggedIn={loggedIn}
             screen={screen}
+            notFound={notFoundSaved}
             saveMovie={saveMovie}
             onSearch={onSearch}
-            setOnCheckbox={setOnCheckbox}
-            onCheckbox={onCheckbox}
+            setOnCheckbox={setOnCheckboxSavedMovies}
+            onCheckbox={onCheckboxSavedMovies}
             cardDelete={cardDelete}
           />
           <ProtectedRoute
@@ -372,12 +514,11 @@ function App() {
           <Route path='/signup'>
             <Register handleRegister={handleRegister} />
           </Route>
-          <Route path='/errors'>
-            <ErrorPage />
-          </Route>
+          <Route path='*' exact component={ErrorPage} />
           <Route>
             {loggedIn ? <Redirect to='/movies' /> : <Redirect to='/signin' />}
           </Route>
+          <Redirect from='*' to='/errors' />
         </Switch>
         <InfoTooltip
           isOpen={infoPopup}

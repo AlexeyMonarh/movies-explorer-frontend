@@ -14,6 +14,7 @@ function SavedMovies(props) {
         onCheckbox={props.onCheckbox}
       />
       <MoviesCardList
+        notFound={props.notFound}
         screen={props.screen}
         cardLike={props.cardLike}
         itemLike={props.itemLike}

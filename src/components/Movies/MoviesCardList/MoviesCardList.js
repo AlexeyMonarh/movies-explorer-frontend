@@ -121,11 +121,11 @@ function MoviesCardList(props) {
 
   return (
     <div className='movies-card-list'>
-      <Preloader
-        initPreloader={props.initPreloader}
-        notFound={props.notFound}
-        requestFailed={props.requestFailed}
-      />
+       <Preloader
+          initPreloader={props.initPreloader}
+          notFound={props.notFound}
+          requestFailed={props.requestFailed}
+        />
       <ul className='movies-card-list__ul'>
         <Switch>
           <Route path='/movies'>

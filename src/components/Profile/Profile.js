@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import validationSchema from '../../utils/FormValidator/FormValidatorProfile';
 import Header from '../Header/Header';
@@ -20,7 +19,7 @@ function Profile(props) {
           }}
           validateOnBlur
           onSubmit={(values) => {
-            props.handleUpdateUser(values)
+            props.handleUpdateUser(values);
           }}
           validationSchema={validationSchema}>
           {({
@@ -80,8 +79,12 @@ function Profile(props) {
               <div className='profile-block__form-buttons'>
                 <button
                   type='submit'
-                  className='profile-block__form-button link_hover'
-                  disabled={!isValid && !dirty}
+                  className={
+                    !isValid && !dirty
+                      ? 'profile-block__form-button button_disabled'
+                      : 'profile-block__form-button link_hover'
+                  }
+                  disabled={!isValid || !dirty}
                   onClick={handleSubmit}>
                   Редактировать
                 </button>

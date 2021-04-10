@@ -98,7 +98,11 @@ function Register(props) {
             <div className='identification__buttons'>
               <button
                 type='submit'
-                className='identification__button'
+                className={
+                  !isValid || !dirty
+                    ? 'identification__button button_disabled'
+                    : 'identification__button link_hover'
+                }
                 disabled={!isValid && !dirty}
                 onClick={handleSubmit}>
                 Зарегистрироваться

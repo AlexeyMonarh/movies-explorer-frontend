@@ -16,7 +16,7 @@ function Portfolio() {
           </a>
         </li>
         <li className='portfolio__item link_hover'>
-          <a href='https://monarhmesto.students.nomoreparties.space/' target='_blank' className='portfolio__item-link'>
+          <a href='https://alexeymonarh.github.io/mesto-react/' target='_blank' className='portfolio__item-link'>
             <p className='portfolio__item-paragraph'>Одностраничное приложение</p> ↗
           </a>
         </li>

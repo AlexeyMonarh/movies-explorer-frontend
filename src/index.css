@@ -24,3 +24,7 @@
 .link_hover:hover {
   opacity: 0.6;
 }
+
+.button_disabled {
+  opacity: 0.6;
+}
