@@ -393,7 +393,7 @@ function App() {
                 const resultsArray = arr.map((result) => result);
                 localStorage.setItem('movies', JSON.stringify(resultsArray));
                 // console.log(resultsArray);
-                // fuseSearch(text, resultsArray);
+                fuseSearch(text, resultsArray);
                 // setPreloader(false);
               }
 
