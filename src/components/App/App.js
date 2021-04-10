@@ -331,10 +331,9 @@ function App() {
       <div className='app'>
         <Switch>
           <Route exact path='/'>
-            <Main />
+            <Main loggedIn={loggedIn} />
           </Route>
           <ProtectedRoute
-            exact
             path='/movies'
             component={Movies}
             loggedIn={loggedIn}
@@ -349,19 +348,24 @@ function App() {
             movies={movies}
             onSearch={onSearch}
           />
-          <Route path='/saved-movies'>
-            <SavedMovies
-              screen={screen}
-              saveMovie={saveMovie}
-              onSearch={onSearch}
-              setOnCheckbox={setOnCheckbox}
-              onCheckbox={onCheckbox}
-              cardDelete={cardDelete}
-            />
-          </Route>
-          <Route path='/profile'>
-            <Profile signOut={signOut} handleUpdateUser={handleUpdateUser} />
-          </Route>
+          <ProtectedRoute
+            path='/saved-movies'
+            component={SavedMovies}
+            loggedIn={loggedIn}
+            screen={screen}
+            saveMovie={saveMovie}
+            onSearch={onSearch}
+            setOnCheckbox={setOnCheckbox}
+            onCheckbox={onCheckbox}
+            cardDelete={cardDelete}
+          />
+          <ProtectedRoute
+            path='/profile'
+            component={Profile}
+            loggedIn={loggedIn}
+            signOut={signOut}
+            handleUpdateUser={handleUpdateUser}
+          />
           <Route path='/signin'>
             <Login handleLogin={handleLogin} />
           </Route>

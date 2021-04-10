@@ -14,9 +14,10 @@ function Navigation(props) {
     setSidebar(!sidebar);
     setOverlay(!overlay);
   }
+
   return (
     <Switch>
-      {/* {props.loggedIn === false || !props.loggedIn ? ( */}
+      {props.loggedIn === false ? (
         <Route exact path='/'>
           <ul className='nav nav_main'>
             <li className='nav__li nav__li_main link_hover'>
@@ -35,7 +36,7 @@ function Navigation(props) {
             </li>
           </ul>
         </Route>
-      {/* ) : ( */}
+      ) : (
         <Route>
           <IconContext.Provider value={{ color: '#000' }}>
             <Link to='#' className={`nav__bar`}>
@@ -83,7 +84,7 @@ function Navigation(props) {
             </nav>
           </IconContext.Provider>
         </Route>
-      {/* )} */}
+      )}
     </Switch>
   );
 }

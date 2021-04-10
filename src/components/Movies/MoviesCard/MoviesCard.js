@@ -7,7 +7,7 @@ function MoviesCard(props) {
       return compareId;
     }
   }
-  const initLike = ` ${
+  const initLike = `${
     compareId()
       ? 'movies-card__description-button_like'
       : 'movies-card__description-button_dislike'
@@ -40,7 +40,7 @@ function MoviesCard(props) {
         <h2 className='movies-card__description-title'>{props.description}</h2>
         <button
           type='submit'
-          className={`movies-card__description-button link_hover ${props.displayNone}${initLike}`}
+          className={`movies-card__description-button link_hover ${props.displayNone} ${initLike}`}
           onClick={cardSave}></button>
       </div>
       <div className='movies-card__description-time'>

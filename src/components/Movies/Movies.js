@@ -7,7 +7,7 @@ import Footer from '../Footer/Footer';
 function Movies(props) {
   return (
     <div className='movies'>
-      <Header background='header_background' loggedIn={props.loggedIn} />
+      <Header background='header_background' />
       <SearchForm
         onSearch={props.onSearch}
         setOnCheckbox={props.setOnCheckbox}
