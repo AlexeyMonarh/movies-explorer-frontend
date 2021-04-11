@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Route,
   Switch,
@@ -80,7 +80,9 @@ function App() {
 
   useEffect(() => {
     const moviesSavedStorage = localStorage.getItem('saved-movies');
-    setSaveMovie(JSON.parse(moviesSavedStorage));
+    if (moviesSavedStorage) {
+      setSaveMovie(JSON.parse(moviesSavedStorage));
+    }
   }, []);
 
   useEffect(() => {
@@ -88,7 +90,7 @@ function App() {
     if (firstSearch) {
       setFirstSearch(JSON.parse(firstSearch));
     }
-  }, []);
+  }, [firstSearch]);
 
   useEffect(() => {
     const moviesSearcStorage = localStorage.getItem('movies-search');
@@ -163,6 +165,10 @@ function App() {
             .then((res) => {
               if (res.token) {
                 localStorage.setItem('jwt', res.token);
+                localStorage.setItem(
+                  'saved-movies',
+                  JSON.stringify([])
+                );
                 MainApi.setToken(res.token);
                 return res.token;
               }
@@ -267,83 +273,111 @@ function App() {
     setSaveMovie([]);
     setLoggedIn(false);
     setFirstSearch(false);
+    setNotFound(false);
     history.push('/');
   }
 
   function fuseSearch(text, params) {
     setPreloader(true);
-    console.log(params)
-    // if (text || params) {
-    const fuse = new Fuse(params, {
-      keys: ['nameRU'],
-      includeScore: 0,
-      includeMatches: true,
-      findAllMatches: true,
-      threshold: 0.1,
-      location: 0,
-    });
-    const results = fuse.search(text.search);
-
-    if (onCheckbox === true) {
-      const newResults = results.filter((c) => c.item.duration <= 40);
-      const newResultsArr = newResults.map((result) => result.item);
-      if (newResultsArr.length === 0) {
-        setNotFoundSaved(true);
+    setRequestFailed(false);
+    setNotFound(false);
+    if (params) {
+      const fuse = new Fuse(params, {
+        keys: ['nameRU'],
+        includeScore: 0,
+        includeMatches: true,
+        findAllMatches: true,
+        threshold: 0.1,
+        location: 0,
+      });
+      const results = fuse.search(text.search);
+      const resultsArray = results.map((result) => result.item);
+      if (firstSearch === false) {
+        if (resultsArray.length === 0) {
+          setNotFound(true);
+        } else {
+          setNotFound(false);
+        }
+        if (onCheckbox === true) {
+          const newResults = resultsArray.filter((c) => c.duration <= 40);
+          if (newResults.length === 0) {
+            setNotFound(true);
+          } else {
+            setNotFound(false);
+          }
+          setPreloader(false);
+          localStorage.setItem('movies-search', JSON.stringify(newResults));
+          return setMovies(newResults);
+        }
+        if (location.pathname === '/saved-movies') {
+          if (resultsArray.length === 0) {
+            setNotFoundSaved(true);
+          } else {
+            setNotFoundSaved(false);
+          }
+          if (onCheckboxSavedMovies === true) {
+            const newResults = resultsArray.filter((c) => c.duration <= 40);
+            if (newResults.length === 0) {
+              setNotFoundSaved(true);
+            } else {
+              setNotFoundSaved(false);
+            }
+            setPreloader(false);
+            return setSaveMovie(newResults);
+          }
+          localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+          setPreloader(false);
+          return setSaveMovie(resultsArray);
+        }
+        localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+        setPreloader(false);
+        return setMovies(resultsArray);
       } else {
-        setNotFoundSaved(false);
+        if (location.pathname === '/movies') {
+          if (resultsArray.length === 0) {
+            setNotFound(true);
+          } else {
+            setNotFound(false);
+          }
+          if (onCheckbox === true) {
+            const newResults = resultsArray.filter((c) => c.duration <= 40);
+            if (newResults.length === 0) {
+              setNotFound(true);
+            } else {
+              setNotFound(false);
+            }
+            setPreloader(false);
+            localStorage.setItem('movies-search', JSON.stringify(newResults));
+            return setMovies(newResults);
+          }
+          localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+          setPreloader(false);
+          return setMovies(resultsArray);
+        }
+
+        if (location.pathname === '/saved-movies') {
+          if (resultsArray.length === 0) {
+            setNotFoundSaved(true);
+          } else {
+            setNotFoundSaved(false);
+          }
+          if (onCheckboxSavedMovies === true) {
+            const newResults = resultsArray.filter((c) => c.duration <= 40);
+            if (newResults.length === 0) {
+              setNotFoundSaved(true);
+            } else {
+              setNotFoundSaved(false);
+            }
+            setPreloader(false);
+            return setSaveMovie(newResults);
+          }
+          localStorage.setItem('movies-search', JSON.stringify(resultsArray));
+          setPreloader(false);
+          return setSaveMovie(resultsArray);
+        }
       }
       setPreloader(false);
-      localStorage.setItem('movies-search', JSON.stringify(newResultsArr));
-      return setMovies(newResultsArr);
     }
-
-    if (onCheckboxSavedMovies === true) {
-      const newResults = results.filter((c) => c.item.duration <= 40);
-      const newResultsArr = newResults.map((result) => result.item);
-      if (newResultsArr.length === 0) {
-        setNotFoundSaved(true);
-      } else {
-        setNotFoundSaved(false);
-      }
-      setPreloader(false);
-      return setSaveMovie(newResultsArr);
-    }
-    const resultsArray = results.map((result) => result.item);
-    // console.log(resultsArray);
-    if (resultsArray.length === 0) {
-      setNotFound(true);
-    } else {
-      setNotFound(false);
-    }
-
-    if (firstSearch === false) {
-      localStorage.setItem('movies-search', JSON.stringify(resultsArray));
-      setPreloader(false);
-      return setMovies(resultsArray);
-    }
-
-    if (location.pathname === '/movies') {
-      localStorage.setItem('movies-search', JSON.stringify(resultsArray));
-      setPreloader(false);
-      return setMovies(resultsArray);
-    }
-
-    if (location.pathname === '/saved-movies') {
-      localStorage.setItem('movies-search', JSON.stringify(resultsArray));
-      setPreloader(false);
-      return setSaveMovie(resultsArray);
-    }
-    // if (results.length === 0) {
-    //   setNotFound(true);
-    // } else {
-    //   setNotFound(false);
-    // }
-
-    setPreloader(false);
-    // return results;
-    // } else {
-    //   console.log('Ничего не найдено!');
-    // }
   }
 
   const onSearch = (text) => {
@@ -354,63 +388,22 @@ function App() {
         const moviesSavedStorage = localStorage.getItem('saved-movies');
         const arrSavedMovies = JSON.parse(moviesSavedStorage);
         fuseSearch(text, arrSavedMovies);
-
-        // console.log(savedMoviesArrSearch)
-        // if (onCheckboxSavedMovies === true) {
-        //   const newResults = savedMoviesArrSearch.filter(
-        //     (c) => c.item.duration <= 40
-        //   );
-        //   const newResultsArr = newResults.map((result) => result.item);
-        //   // if (newResultsArr.length === 0) {
-        //   //   setNotFoundSaved(true);
-        //   // } else {
-        //   //   setNotFoundSaved(false);
-        //   // }
-        //   return setSaveMovie(newResultsArr);
-        // }
-        // const resultsArray = savedMoviesArrSearch.map((result) => result.item);
-        // if (resultsArray.length === 0) {
-        //   setNotFoundSaved(true);
-        // } else {
-        //   setNotFoundSaved(false);
-        // }
-        // return setSaveMovie(resultsArray);
       }
     }
     if (location.pathname === '/movies') {
       if (text) {
-        // setPreloader(true);
-        setRequestFailed(false);
-        setNotFound(false);
         if (firstSearch === false) {
           setRequestFailed(false);
-          setNotFound(false);
-          localStorage.setItem('firstSearch', JSON.stringify(true));
-          setFirstSearch(true);
+          setNotFound(false);   
           MoviesApi.getInitialMovies()
             .then((arr) => {
               if (arr) {
+                setFirstSearch(true);
+                localStorage.setItem('firstSearch', JSON.stringify(true));
                 const resultsArray = arr.map((result) => result);
                 localStorage.setItem('movies', JSON.stringify(resultsArray));
-                // console.log(resultsArray);
                 fuseSearch(text, resultsArray);
-                // setPreloader(false);
               }
-
-              // const resultsArray = firstArrSearch.map((result) => result.item);
-              // setPreloader(false);
-
-              // if (resultsArray.length === 0) {
-              //   setNotFound(true);
-              // } else {
-              //   setNotFound(false);
-              // }
-              // localStorage.setItem(
-              //   'movies-search',
-              //   JSON.stringify(resultsArray)
-              // );
-
-              // return setMovies(resultsArray);
             })
             .catch((err) => {
               if (err) {
@@ -418,34 +411,9 @@ function App() {
               }
             });
         }
-        const moviesArrayStorage = localStorage.getItem('movies-search');
+        const moviesArrayStorage = localStorage.getItem('movies');
         const arrMovies = JSON.parse(moviesArrayStorage);
         fuseSearch(text, arrMovies);
-        // console.log(moviesArrSearch)
-        // if (onCheckbox === true) {
-        //   const newResults = moviesArrSearch.filter(
-        //     (c) => c.item.duration <= 40
-        //   );
-        //   const newResultsArr = newResults.map((result) => result.item);
-        //   // setPreloader(false);
-        //   if (newResultsArr.length === 0) {
-        //     setNotFound(true);
-        //   } else {
-        //     setNotFound(false);
-        //   }
-        //   localStorage.setItem('movies-search', JSON.stringify(newResultsArr));
-        //   return setMovies(newResultsArr);
-        // }
-        // const resultsArray = moviesArrSearch.map((result) => result.item);
-        // setPreloader(false);
-        // if (resultsArray.length === 0) {
-        //   setNotFound(true);
-        // } else {
-        //   setNotFound(false);
-        // }
-        // localStorage.setItem('movies-search', JSON.stringify(resultsArray));
-        // // setPreloader(false);
-        // return setMovies(resultsArray);
       }
     }
   };
@@ -480,6 +448,8 @@ function App() {
             loggedIn={loggedIn}
             setOnCheckbox={setOnCheckbox}
             onCheckbox={onCheckbox}
+            onCheckboxSavedMovies={onCheckboxSavedMovies}
+            setOnCheckboxSavedMovies={setOnCheckboxSavedMovies}
             initPreloader={preloader}
             notFound={notFound}
             requestFailed={requestFailed}
@@ -518,7 +488,9 @@ function App() {
           <Route>
             {loggedIn ? <Redirect to='/movies' /> : <Redirect to='/signin' />}
           </Route>
-          <Redirect from='*' to='/errors' />
+          <Route>
+            <Redirect from='*' to='/errors' />
+          </Route>
         </Switch>
         <InfoTooltip
           isOpen={infoPopup}

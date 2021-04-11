@@ -6,6 +6,9 @@ import { Formik } from 'formik';
 function SearchForm(props) {
   function toggleCheckbox() {
     props.setOnCheckbox(!props.onCheckbox);
+    if (location.pathname === 'saved-movies') {
+      props.setOnCheckboxSavedMovies(!props.onCheckboxSavedMovies);
+    }
   }
 
   return (
@@ -16,10 +19,8 @@ function SearchForm(props) {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          if(values){
+          if (values) {
             props.onSearch(values);
-          } else {
-            console.log('Введите запрос в поле ввода!')
           }
         }}
         validationSchema={validationSchema}>
@@ -64,10 +65,17 @@ function SearchForm(props) {
         )}
       </Formik>
       <label className='search-form__checkbox'>
-        <input type='checkbox' className='search-form__checkbox-input' />
-        <span className='search-form__checkbox-text' onClick={toggleCheckbox}>
-          Короткометражки
-        </span>
+        <input
+          type='checkbox'
+          className='search-form__checkbox-input'
+          onChange={toggleCheckbox}
+          checked={
+            location.pathname === 'saved-movies'
+              ? props.onCheckboxSavedMovies
+              : props.onCheckbox
+          }
+        />
+        <span className='search-form__checkbox-text'>Короткометражки</span>
       </label>
     </div>
   );

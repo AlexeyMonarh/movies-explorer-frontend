@@ -12,6 +12,8 @@ function SavedMovies(props) {
         onSearch={props.onSearch}
         setOnCheckbox={props.setOnCheckbox}
         onCheckbox={props.onCheckbox}
+        setOnCheckboxSavedMovies={props.setOnCheckboxSavedMovies}
+        onCheckboxSavedMovies={props.onCheckboxSavedMovies}
       />
       <MoviesCardList
         notFound={props.notFound}
