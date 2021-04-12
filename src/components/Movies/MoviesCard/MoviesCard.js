@@ -29,7 +29,13 @@ function MoviesCard(props) {
 
   return (
     <li className='movies-card'>
-      <a href={`${props.data.trailerLink}`} target='_blank'>
+      <a
+        href={
+          location.pathname === '/movies'
+            ? `${props.data.trailerLink}`
+            : `${props.data.trailer}`
+        }
+        target='_blank'>
         <img
           src={props.img}
           alt='Изображение дипломного проекта'

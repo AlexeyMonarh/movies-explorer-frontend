@@ -42,6 +42,7 @@ function App() {
     img: '',
   });
   const [infoPopup, setInfoPopup] = useState();
+  const [permissionsChecked, setPermissionsChecked] = useState(false);
 
   function filterButtonImg() {
     const filterButtonImg = saveMovie.map((res) => res.movieId);
@@ -51,25 +52,37 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      auth
-        .getContent(token)
-        .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            setСurrentUser(res);
-          }
-        })
-        .catch((res) => {
-          console.log(`Ошибка: ${res}`);
-        });
+      tokenCheck(token);
+    }
+    if (!token) {
+      setPermissionsChecked(true);
     }
   }, []);
 
+  function tokenCheck(token) {
+    auth
+      .getContent(token)
+      .then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          history.push(location.pathname);
+          setСurrentUser(res);
+        }
+      })
+      .catch((res) => {
+        console.log(`Ошибка: ${res}`);
+        setPermissionsChecked(true);
+      })
+      .finally(() => {
+        setPermissionsChecked(true);
+      });
+  }
+
   useEffect(() => {
     if (loggedIn) {
-      history.push('/movies');
       MainApi.getUser()
         .then((res) => {
+          setLoggedIn(true);
           setСurrentUser(res);
         })
         .catch((res) => {
@@ -165,10 +178,7 @@ function App() {
             .then((res) => {
               if (res.token) {
                 localStorage.setItem('jwt', res.token);
-                localStorage.setItem(
-                  'saved-movies',
-                  JSON.stringify([])
-                );
+                localStorage.setItem('saved-movies', JSON.stringify([]));
                 MainApi.setToken(res.token);
                 return res.token;
               }
@@ -394,7 +404,7 @@ function App() {
       if (text) {
         if (firstSearch === false) {
           setRequestFailed(false);
-          setNotFound(false);   
+          setNotFound(false);
           MoviesApi.getInitialMovies()
             .then((arr) => {
               if (arr) {
@@ -435,6 +445,10 @@ function App() {
     }
   };
 
+  if (!permissionsChecked) {
+    return null;
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className='app'>
@@ -445,6 +459,7 @@ function App() {
           <ProtectedRoute
             path='/movies'
             component={Movies}
+            permissionsChecked={permissionsChecked}
             loggedIn={loggedIn}
             setOnCheckbox={setOnCheckbox}
             onCheckbox={onCheckbox}
@@ -462,6 +477,7 @@ function App() {
           <ProtectedRoute
             path='/saved-movies'
             component={SavedMovies}
+            permissionsChecked={permissionsChecked}
             loggedIn={loggedIn}
             screen={screen}
             notFound={notFoundSaved}
@@ -474,6 +490,7 @@ function App() {
           <ProtectedRoute
             path='/profile'
             component={Profile}
+            permissionsChecked={permissionsChecked}
             loggedIn={loggedIn}
             signOut={signOut}
             handleUpdateUser={handleUpdateUser}
@@ -485,9 +502,6 @@ function App() {
             <Register handleRegister={handleRegister} />
           </Route>
           <Route path='*' exact component={ErrorPage} />
-          <Route>
-            {loggedIn ? <Redirect to='/movies' /> : <Redirect to='/signin' />}
-          </Route>
           <Route>
             <Redirect from='*' to='/errors' />
           </Route>
