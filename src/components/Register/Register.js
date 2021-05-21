@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import validationSchema from '../../utils/FormValidator/FormValidatorRegister';
 import logo from '../../images/svg/logo.svg';
 
-function Register() {
+function Register(props) {
   return (
     <div className='identification'>
       <Link to='/'>
@@ -18,7 +18,7 @@ function Register() {
         }}
         validateOnBlur
         onSubmit={(values) => {
-          console.log(values);
+          props.handleRegister(values);
         }}
         validationSchema={validationSchema}>
         {({
@@ -98,7 +98,11 @@ function Register() {
             <div className='identification__buttons'>
               <button
                 type='submit'
-                className='identification__button'
+                className={
+                  !isValid || !dirty
+                    ? 'identification__button button_disabled'
+                    : 'identification__button link_hover'
+                }
                 disabled={!isValid && !dirty}
                 onClick={handleSubmit}>
                 Зарегистрироваться

@@ -10,7 +10,7 @@ function Header(props) {
         <Link to='/'>
           <img src={logo} alt='Логотип' className='header__logo link_hover' />
         </Link>
-        <Navigation />
+        <Navigation loggedIn={props.loggedIn} />
       </div>
     </header>
   );

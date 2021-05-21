@@ -7,6 +7,7 @@ const validationSchema = yup.object().shape({
     .required('Обязательное поле'),
   password: yup
     .string()
+    .min(2, 'Минимум 2 символа')
     .typeError('Должно быть строкой')
     .required('Обязательное поле'),
 });

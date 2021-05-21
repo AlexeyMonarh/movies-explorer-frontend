@@ -11,13 +11,20 @@
 @import url('../src/components/Footer/Footer.css');
 @import url('../src/components/404/ErrorPage.css');
 @import url('../src/utils/FormValidator/FormValidator.css');
+@import url('../src/components/InfoTooltip/InfoTooltip.css');
+@import url('../src/components/PopupWithForm/PopupWithForm.css');
 
 .page {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   font-family: 'Inter', 'Arial', sans-serif;
+  height: 100vh;
 }
 
 .link_hover:hover {
+  opacity: 0.6;
+}
+
+.button_disabled {
   opacity: 0.6;
 }

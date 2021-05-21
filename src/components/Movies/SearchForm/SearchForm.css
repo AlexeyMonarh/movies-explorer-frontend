@@ -1,4 +1,5 @@
 .search-form {
+  flex: 2 0 auto;
   display: flex;
   flex-direction: column;
   padding: 80px 70px 0 70px;
@@ -8,8 +9,12 @@
   display: flex;
   align-items: center;
 }
+.search-form__search-block {
+  width: 100%;
+}
 
 .search-form__search-input {
+  outline: none;
   box-shadow: none;
   box-sizing: border-box;
   padding: 20px 16px;
@@ -29,6 +34,7 @@
 }
 
 .search-form__search-button {
+  outline: none;
   min-width: 44px;
   height: 44px;
   background: #ff6838;

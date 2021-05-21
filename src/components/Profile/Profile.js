@@ -1,23 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import validationSchema from '../../utils/FormValidator/FormValidatorProfile';
 import Header from '../Header/Header';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function Profile() {
+function Profile(props) {
+  const currentUser = React.useContext(CurrentUserContext);
   return (
     <div className='profile'>
       <Header background='header_background' />
       <div className='profile-block'>
-        <h2 className='profile-block__title'>Привет, Виталий!</h2>
+        <h2 className='profile-block__title'>{`Привет, ${currentUser.name}!`}</h2>
         <Formik
+          enableReinitialize={true}
           initialValues={{
-            name: 'Виталий',
-            email: 'pochta@yandex.ru',
+            name: `${currentUser.name}`,
+            email: `${currentUser.email}`,
           }}
           validateOnBlur
           onSubmit={(values) => {
-            console.log(values);
+            props.handleUpdateUser(values);
           }}
           validationSchema={validationSchema}>
           {({
@@ -42,9 +44,9 @@ function Profile() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.name}
+                    placeholder={'Ваше имя'}
                     required
                     className='profile-block__form-input'
-                    dir='rtl'
                   />
                   <label
                     className='profile-block__form-item-input-label'
@@ -59,10 +61,10 @@ function Profile() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
+                    placeholder={'Ваша почта'}
                     required
                     autoComplete='off'
                     className='profile-block__form-input'
-                    dir='rtl'
                   />
                   <label
                     className='profile-block__form-item-input-label'
@@ -71,20 +73,26 @@ function Profile() {
                   </label>
                 </div>
                 {touched.email && errors.email && (
-                    <p className='error'>{errors.email}</p>
-                  )}
+                  <p className='error'>{errors.email}</p>
+                )}
               </div>
               <div className='profile-block__form-buttons'>
                 <button
                   type='submit'
-                  className='profile-block__form-button link_hover'
-                  disabled={!isValid && !dirty}
+                  className={
+                    !isValid && !dirty
+                      ? 'profile-block__form-button button_disabled'
+                      : 'profile-block__form-button link_hover'
+                  }
+                  disabled={!isValid || !dirty}
                   onClick={handleSubmit}>
                   Редактировать
                 </button>
-                <Link className='profile-block__form-link link_hover' to='/'>
+                <span
+                  className='profile-block__form-link link_hover'
+                  onClick={props.signOut}>
                   Выйти из аккаунта
-                </Link>
+                </span>
               </div>
             </form>
           )}

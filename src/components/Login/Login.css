@@ -61,6 +61,7 @@
 }
 
 .identification__button {
+  outline: none;
   border: none;
   color: #fff;
   height: 45px;
